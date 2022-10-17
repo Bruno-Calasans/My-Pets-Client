@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
 // style
-import { Container } from "./Info.style";
+import { Container } from "./info.style";
 import { Pet } from "../../../types/pet.type";
 import useApi from './../../../hooks/useApi';
 
