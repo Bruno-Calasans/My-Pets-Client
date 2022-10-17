@@ -2,7 +2,7 @@
 document.title = 'profile'
 
 // style
-import { Container } from "./Profile.style";
+import { Container } from "./profile.style";
 
 // react
 import { useState, useEffect, useReducer, useRef, useContext } from "react";
