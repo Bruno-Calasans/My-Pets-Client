@@ -2,7 +2,7 @@
 document.title = 'pets'
 
 // style
-import { Container, PetsList } from "./Pets.style"
+import { Container, PetsList } from "./pets.style"
 
 // react 
 import { useEffect, useState } from "react"
