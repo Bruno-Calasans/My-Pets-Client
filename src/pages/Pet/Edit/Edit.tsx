@@ -3,7 +3,7 @@
 document.title = 'pet edit'
 
 // style
-import { Container } from "./Edit.style";
+import { Container } from "./edit.style";
 
 // react
 import { useEffect, useState, useReducer, useRef } from "react";
