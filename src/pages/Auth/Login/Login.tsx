@@ -6,7 +6,7 @@ import { useReducer, useRef } from "react";
 import { useContext } from "react";
 
 // style
-import { Container } from "./Login.style";
+import { Container } from "./login.style";
 
 // components
 import { TextField, Link} from "@mui/material";
