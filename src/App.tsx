@@ -80,7 +80,7 @@ function App() {
         </Routes>
       </Main>
       <Footer
-        pageName="Get a Pet"
+        pageName="My Pets"
         author="Bruno Calasans"
         authorUrl="https://github.com/Bruno-Calasans"
       />

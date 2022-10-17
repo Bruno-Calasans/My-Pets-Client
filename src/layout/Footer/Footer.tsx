@@ -1,10 +1,10 @@
 
-import { Container, Content } from "./Footer.style";
+import { Container, Content } from "./footer.style";
 
 interface FooterProps{
-    pageName: string
-    author: string
-    authorUrl: string
+  pageName: string
+  author: string
+  authorUrl: string
 }
 
 export default function Footer({ pageName, author, authorUrl }: FooterProps) {
