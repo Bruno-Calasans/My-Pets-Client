@@ -28,7 +28,7 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 function App() {
   return (
     <>
-      <Header logoSrc="/src/assets/logo.png" />
+      <Header logoSrc="src/assets/logo.png" />
       <Main>
         <Routes>
           <Route index element={<Pets />} />
