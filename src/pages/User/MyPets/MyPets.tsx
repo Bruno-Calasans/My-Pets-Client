@@ -5,7 +5,7 @@ document.title = 'mypets'
 import { useState, useEffect } from 'react';
 
 // style
-import { Container, PetsList } from "./Mypets.style";
+import { Container, PetsList } from "./mypets.style";
 
 // mui components
 import {
