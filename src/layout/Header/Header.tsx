@@ -7,7 +7,7 @@ import {
   AccountCircle,
 } from "@mui/icons-material";
 
-import { Container, Content, Logo } from "./header.style";
+import { Container, Content, Logo } from "./Header.style";
 import { useContext } from "react";
 import { AuthContextType } from "../../contexts/AuthContext";
 import Menu from './../../components/Menu/Menu';

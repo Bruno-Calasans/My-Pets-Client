@@ -3,7 +3,7 @@
 document.title = 'my adoptions'
 
 // style
-import { Container } from "./myadoptions.style";
+import { Container } from "./Myadoptions.style";
 
 // react 
 import { useState, useEffect } from 'react';

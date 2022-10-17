@@ -1,6 +1,6 @@
 
 
-import { Container } from "./main.style";
+import { Container } from "./Main.style";
 import FlashMessage from "../../components/FlashMessage/FlashMessage";
 
 interface mainProps {

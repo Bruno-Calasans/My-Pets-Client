@@ -2,7 +2,7 @@
 document.title = 'login'
 
 // style
-import { Container } from "./register.style";
+import { Container } from "./Register.style";
 
 // react
 import { useState, useReducer, useContext, useRef } from "react";

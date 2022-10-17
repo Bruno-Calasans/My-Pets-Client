@@ -1,5 +1,5 @@
 
-import { Container, Content } from "./footer.style";
+import { Container, Content } from "./Footer.style";
 
 interface FooterProps{
   pageName: string
