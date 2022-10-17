@@ -53,7 +53,7 @@ export default function MyAdoptions(){
 
     const cancelReturn = async (id: string) => {
       await api.cancelReturn(id)
-      loadPets()
+      loadAdoptions()
     }
 
     useEffect(() => { loadAdoptions() }, [])
@@ -76,7 +76,7 @@ export default function MyAdoptions(){
                         <Avatar
                           alt={pet.name}
                           src={
-                            import.meta.env.VITE_IMGS_PET_FOLDER + pet.images[0]
+                            import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER + pet.images[0]
                           }
                           sx={{ width: 120, height: 100 }}
                         />

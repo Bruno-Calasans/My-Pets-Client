@@ -7,6 +7,7 @@ export type UserFields =
   | "confirmationPassword"
   | "phone";
 
+export type LoginFields = 'email' | 'password'
 
 export interface UserInput {
   value: string

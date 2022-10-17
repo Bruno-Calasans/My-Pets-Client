@@ -1,16 +1,9 @@
 
 import axios from 'axios'
 
-interface ServerConfig {
-    hostname: string,
-    port: number
-}
-
-const serverConfig: ServerConfig = JSON.parse(import.meta.env.VITE_serverConfig)
-const { hostname, port } = serverConfig;
-
+const API_SERVER: string = import.meta.env.VITE_API_SERVER
 const api = axios.create({
-    baseURL: `http://${hostname}:${port}`
+    baseURL: API_SERVER
 })
 
 export default api

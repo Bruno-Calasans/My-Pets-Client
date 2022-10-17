@@ -3,7 +3,6 @@ document.title = 'mypets'
 
 // react
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 
 // style
 import { Container, PetsList } from "./MyPets.style";
@@ -100,7 +99,8 @@ export default function MyPets() {
                       <Avatar
                         className="petAvatar"
                         src={
-                          import.meta.env.VITE_IMGS_PET_FOLDER + pet.images[0]
+                          import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER +
+                          pet.images[0]
                         }
                         alt={pet.name}
                       />
@@ -144,7 +144,8 @@ export default function MyPets() {
                             <p className="adoptionInfo">
                               <span className="highlight">
                                 {pet.adoption.adopter.firstName}
-                              </span> cancelou adoção.
+                              </span>{" "}
+                              cancelou a adoção.
                             </p>
                           )}
 
@@ -152,7 +153,8 @@ export default function MyPets() {
                             <p className="adoptionInfo">
                               <span className="highlight">
                                 {pet.adoption.adopter.firstName}
-                              </span> devolveu o pet.
+                              </span>{" "}
+                              devolveu o pet.
                             </p>
                           )}
 
@@ -161,8 +163,8 @@ export default function MyPets() {
                               <span className="highlight">
                                 {pet.adoption.adopter.firstName}
                               </span>{" "}
-                              deseja devolver o pet. Entre em contato através
-                              do número{" "}
+                              deseja devolver o pet. Entre em contato através do
+                              número{" "}
                               <span className="highlight">
                                 {pet.adoption.adopter.phone}
                               </span>
@@ -235,13 +237,13 @@ export default function MyPets() {
                           </Button>
 
                           <Button
-                          className="actionBtn cancelBtn"
-                          startIcon={<Cancel />}
-                          variant="contained"
-                          onClick={(e) => cancelReturn(pet._id)}
-                        >
-                          Cancelar devolução
-                        </Button>
+                            className="actionBtn cancelBtn"
+                            startIcon={<Cancel />}
+                            variant="contained"
+                            onClick={(e) => cancelReturn(pet._id)}
+                          >
+                            Cancelar devolução
+                          </Button>
                         </>
                       )}
                     </CardActions>

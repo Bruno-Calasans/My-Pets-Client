@@ -9,6 +9,7 @@ export const Container = styled.main`
     margin-right: auto;
     max-width: 800px;
     min-width: 320px;
+    /* width: 100%; */
  
     padding: 10px;
 

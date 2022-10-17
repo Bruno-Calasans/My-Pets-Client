@@ -19,7 +19,6 @@ export default function useAuth() {
 
     const [auth, setAuth] = useState<Auth>({
         authenticated: false,
-        token: getToken(),
         checked: false
     })
 
@@ -27,38 +26,51 @@ export default function useAuth() {
     const navigate = useNavigate()
 
     // verify token from local storage is valid
-    const checkToken = async (token: string) => {
-
+    const checkToken = async (token: string | null) => {
+        
         try {
-            const response = await api.get('/user/check', {
-                headers: {
-                authorization: `Bearer ${token}`
-            }})
-            setAuth({ ...auth, authenticated: true, checked: true })
+
+            await api.get("/user/check", {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            });
+            setAuth({ authenticated: true, checked: true })
+            return true
             
         }catch(e){
-            setAuth({ ...auth, authenticated: false, checked: true })
+            setAuth({ authenticated: false, checked: true })
+            return false
         }
     }
 
     // set token in local storage, authorization header and auth state
     const setToken = (token: string) => {
         saveToken(token)
-        api.defaults.headers.Authorization =  `Bearer ${token}`;
-        setAuth({...auth, authenticated: true, token });
+        api.defaults.headers.authorization =  `Bearer ${token}`;
+        setAuth({...auth, authenticated: true });
     };
   
     // remove token from local storage, authorization header and auth state
     const clearToken = () => {
       destroyToken();
-      api.defaults.headers.Authorization = undefined;
-      setAuth({...auth, authenticated: false, token: null });
+      api.defaults.headers.authorization = undefined;
+      setAuth({ ...auth, authenticated: false });
     };
 
     // verifying token
     useEffect( () => {
-        if(auth.token){ checkToken(auth.token) }
 
+        const token = getToken();
+        if(!token){
+            setAuth({ authenticated: false, checked: true })
+            
+        }else {
+            checkToken(token).then((validToken) => {
+              if (!validToken) { clearToken() }
+            })
+        }
+        
     }, [])
 
     return {
@@ -80,14 +92,13 @@ export default function useAuth() {
                 // save token in all necessary pkaces
                 setToken(response.token)
 
-                createMessage({
-                  msg: "Usuário registrado com sucesso",
-                  type: "error",
-                });
+                // createMessage({
+                //   msg: "Usuário registrado com sucesso",
+                //   type: "success",
+                // });
 
                 // redirect to home
                 navigate('/')
-
                 return response
 
             } catch (e: any) {

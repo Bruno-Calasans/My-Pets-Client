@@ -13,28 +13,32 @@ interface CheckAuthProps {
 export default function CheckAuth({children}: CheckAuthProps){
 
     const { auth } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { createMessage } = useFlash();
 
     useEffect(() => {
 
-        if(!auth.authenticated && auth.checked){ 
-            createMessage({msg: "Você deve estart logado", type: "info"})
-            navigate("/auth/login");
-        }
-        
-        if(!auth.token){
-            createMessage({msg: "Você deve estar logado", type: "info"})
-            navigate("/auth/login");
-        }
+        if(auth.checked){ 
 
+            if(!auth.authenticated){
+
+                createMessage({
+                  msg: "Você precisa estar logado para acessar esta página",
+                  type: "info",
+                });
+                navigate("/auth/login");
+            }
+            
+            setLoading(false)
+        }
 
     }, [auth.checked])
 
 
     return (
         <>
-            {children}
+            {!loading && children}
         </>
     )
 

@@ -179,7 +179,6 @@ export default function Profile() {
     return (
       <section>
         <Container ref={form} onSubmit={(e) => e.preventDefault()}>
-
           <Avatar
             className="avatar"
             sx={{ width: 80, height: 80 }}
@@ -187,9 +186,10 @@ export default function Profile() {
             src={
               preview
                 ? URL.createObjectURL(preview)
-                : (state.inputs.image) 
-                ? import.meta.env.VITE_IMGS_USER_FOLDER + `${state.inputs.image}`: 
-                ''
+                : state.inputs.image
+                ? import.meta.env.VITE_USER_IMGS_UPLOAD_FOLDER +
+                  `${state.inputs.image}`
+                : ""
             }
           />
           <IconButton
@@ -297,7 +297,6 @@ export default function Profile() {
             label="Senha"
             placeholder="Escreva seu primeiro nome"
             variant="standard"
-
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -339,7 +338,6 @@ export default function Profile() {
           >
             {state.loading ? "Salvando" : "Salvar"}
           </LoadingButton>
-
         </Container>
       </section>
     );

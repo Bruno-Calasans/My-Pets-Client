@@ -29,7 +29,6 @@ export const Container = styled.nav`
 
     #logoutBtn {
       align-self: flex-start;
-
     }
 
     #closeBtn {
@@ -40,8 +39,13 @@ export const Container = styled.nav`
   }
 
   @media (max-width: 800px) {
+
     #toggleMenu {
       display: flex;
+    }
+
+    #logoutBtn {
+      width: 100%;
     }
 
     #menuContent {

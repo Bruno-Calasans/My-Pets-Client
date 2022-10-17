@@ -74,7 +74,7 @@ export default function Info(){
                 key={index} 
                 className="imageItem">
                   <img
-                    src={import.meta.env.VITE_IMGS_PET_FOLDER + img}
+                    src={import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER + img}
                     alt={pet.name}
                     loading="lazy"
                   />

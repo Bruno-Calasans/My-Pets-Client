@@ -25,7 +25,7 @@ export const userState: UserState = {
     phone: { value: "", error: false, msg: "", valid: false },
     password: { value: "", error: false, msg: "", valid: false },
     confirmationPassword: { value: "", error: false, msg: "", valid: false },
-    image: undefined,
+    // image: undefined,
   },
   loading: false,
   validInputs: false,
@@ -65,7 +65,7 @@ export function userReducer(state: UserState, action: UserInputAction): UserStat
     case "VALIDATE":
       const invalidInputs = [];
 
-      // loop through all inputs to find an invalid or empty inputs
+      // loop through all inputs to find an invalid or empty input
       for (let fieldName in state.inputs) {
         
         if(fieldName === 'image'){ continue }

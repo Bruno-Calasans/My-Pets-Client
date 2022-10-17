@@ -144,55 +144,56 @@ export default function Edit(){
     }
     
     return (
-        
-    <>
+      <>
         <h1 className="pageName">Editar Pet</h1>
 
         <Container ref={form} onSubmit={(e) => e.preventDefault()}>
-
-            <FormControl className="imgsPreview">
-            {preview.length > 0 ?
-            (<ImageList
+          <FormControl className="imgsPreview">
+            {preview.length > 0 ? (
+              <ImageList
                 sx={{ width: "100%", height: 200 }}
                 cols={2}
                 rowHeight={164}
-                >
-                {preview.map((image, index) => (
-                    <ImageListItem key={index}>
-                    <img src={URL.createObjectURL(image)} loading="lazy" />
-                    </ImageListItem>
+              >
+                {preview.map((img, index) => (
+                  <ImageListItem key={index}>
+                    <img src={URL.createObjectURL(img)} loading="lazy" />
+                  </ImageListItem>
                 ))}
-                </ImageList>
-            ) :
-            (<ImageList
+              </ImageList>
+            ) : (
+              <ImageList
                 sx={{ width: "100%", height: 200 }}
                 cols={2}
                 rowHeight={164}
-                >
-                {pet.inputs.images.map((image, index) => (
-                    <ImageListItem key={index}>
-                    <img src={import.meta.env.VITE_IMGS_PET_FOLDER + image} loading="lazy" />
-                    </ImageListItem>
+              >
+                {pet.inputs.images.map((img, index) => (
+                  <ImageListItem key={index}>
+                    <img
+                      src={import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER + img}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
                 ))}
-                </ImageList>
+              </ImageList>
             )}
             <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="label"
+              color="primary"
+              aria-label="upload picture"
+              component="label"
             >
-                <input
+              <input
                 name="images"
                 accept=".png,.jpg"
                 type="file"
                 multiple
                 onChange={previewHandler}
-                />
-                <Upload />
+              />
+              <Upload />
             </IconButton>
-            </FormControl>
+          </FormControl>
 
-            <TextField
+          <TextField
             required
             error={pet.inputs.name.error}
             helperText={pet.inputs.name.msg}
@@ -203,9 +204,9 @@ export default function Edit(){
             variant="standard"
             value={pet.inputs.name.value}
             onChange={inputHandler}
-            />
+          />
 
-            <TextField
+          <TextField
             required
             error={pet.inputs.age.error}
             helperText={pet.inputs.age.msg}
@@ -215,9 +216,9 @@ export default function Edit(){
             variant="standard"
             value={pet.inputs.age.value}
             onChange={inputHandler}
-            />
+          />
 
-            <TextField
+          <TextField
             required
             error={pet.inputs.weight.error}
             helperText={pet.inputs.weight.msg}
@@ -227,40 +228,39 @@ export default function Edit(){
             variant="standard"
             onChange={inputHandler}
             value={pet.inputs.weight.value}
-            />
+          />
 
-            <FormControl variant="standard">
+          <FormControl variant="standard">
             <InputLabel id="color-selector">Cor</InputLabel>
             <Select
-                labelId="color-selector"
-                label="Cor"
-                name="color"
-                onChange={selectHandler}
-                value={pet.inputs.color}
+              labelId="color-selector"
+              label="Cor"
+              name="color"
+              onChange={selectHandler}
+              value={pet.inputs.color}
             >
-                {PetColorList.map((color) => {
+              {PetColorList.map((color) => {
                 return (
-                    <MenuItem key={color} value={color}>
+                  <MenuItem key={color} value={color}>
                     {color}
-                    </MenuItem>
+                  </MenuItem>
                 );
-                })}
+              })}
             </Select>
-            </FormControl>
+          </FormControl>
 
-            <LoadingButton
+          <LoadingButton
             type="submit"
             onClick={edit}
             loading={pet.loading}
             loadingPosition="start"
             startIcon={<Save />}
             variant="outlined"
-            >
+          >
             {pet.loading ? "Salvando Edição..." : "Salvar"}
-            </LoadingButton>
+          </LoadingButton>
         </Container>
-    </>
-        
-    )
+      </>
+    );
 }
 

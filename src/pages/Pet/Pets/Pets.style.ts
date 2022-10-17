@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.section`
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
 
   a {
     align-self: flex-start;

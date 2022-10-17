@@ -1,35 +1,26 @@
 
 document.title = "login";
 import { Container } from "./Login.style";
-import { useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { TextField, Link} from "@mui/material";
 import { Login as LoginIcon } from "@mui/icons-material";
 import { useContext } from "react";
 import { AuthContext } from '../../../contexts/AuthContext';
-import { UserInput } from "../../../types/user";
+import { LoginFields, UserLogin } from "../../../types/user";
 import { validateEmail, validatePassword } from '../../../schemas/userValidator';
-
-type LoginInputFields = 'email' | 'password'
-
-interface UserLoginInputs {
-    email: UserInput
-    password: UserInput
-}
+import formDataToObj from './../../../helpers/getObjFromFormData';
+import { loginReducer, loginState } from "../../../reducer/loginReducer";
 
 export default function Login() {
 
-    const [loading, setLoading] = useState(false)
+    const [state, dispatch] = useReducer(loginReducer, loginState)
     const authCtx = useContext(AuthContext)
-
-    const [inputs, setInputs] = useState<UserLoginInputs>({
-      email: { value: "", error: false, msg: "", valid: false },
-      password: { value: "", error: false, msg: "", valid: false },
-    });
+    const form = useRef<HTMLFormElement | null>(null);
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-      const inputName = e.target.getAttribute('name') as LoginInputFields
+      const inputName = e.target.getAttribute('name') as LoginFields
       let inputValue = e.target.value
 
       let msg = ''
@@ -52,60 +43,35 @@ export default function Login() {
         valid = false;
       }
 
-      setInputs({
-        ...inputs,
-        [inputName]: { value: inputValue, msg, error, valid },
+      dispatch({
+        type: "SET_FIELD",
+        fieldName: inputName,
+        payload: { value: inputValue, msg, error, valid },
       });
 
     }
 
-    const validateInputs =  () => {
+    const login = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
-        const invalidFields = []
-    
-        // loop through all inputs to find an invalid or empty field
-        for(let fieldName in inputs) {
-    
-          const fieldValue = inputs[fieldName as LoginInputFields]
-    
-          if (!fieldValue.valid) {
-    
-            fieldValue.error = true
-            fieldValue.msg = fieldValue.value ? 'Campo inválido' : 'Campo obrigatório'
-    
-            invalidFields.push({[fieldName]: fieldValue})
-          }
-        }
-    
-        // if there's an invalid or empty input at least
-        if(invalidFields.length > 0) {
-          return setInputs({...inputs, ...invalidFields})
-        }
-
-        login()
-    }
-
-    const login = async () => {
-
-      let user: any = {}
-      for(let field in inputs){
-        user[field] = inputs[field as LoginInputFields].value
-      }
-
-      setLoading(true);
+      dispatch({ type: "START_LOADING" });
+      const formData = new FormData(form.current)
+      const user = formDataToObj<UserLogin>(formData)
+      dispatch({ type: "VALIDATE" });
       await authCtx.login(user);
-      setLoading(false);
+      dispatch({ type: "STOP_LOADING" });
     }
+
+    console.log(state);
 
     return (
         <>
         <h1 className="pageName">Entrar</h1>
-        <Container onSubmit={e => e.preventDefault()}>
+        <Container ref={form} onSubmit={e => e.preventDefault()}>
 
             <TextField
             required
-            error={inputs.email.error}
-            helperText={inputs.email.msg}
+            error={state.inputs.email.error}
+            helperText={state.inputs.email.msg}
             type='email'
             name="email"
             margin="normal"
@@ -113,13 +79,13 @@ export default function Login() {
             placeholder="Email"
             variant="standard"
             onChange={inputHandler}
-            value={inputs.email.value}
+            value={state.inputs.email.value}
             />
 
             <TextField
             required
-            error={inputs.password.error}
-            helperText={inputs.password.msg}
+            error={state.inputs.password.error}
+            helperText={state.inputs.password.msg}
             type='password'
             name="password"
             margin="normal"
@@ -127,18 +93,18 @@ export default function Login() {
             placeholder="Senha"
             variant="standard"
             onChange={inputHandler}
-            value={inputs.password.value}
+            value={state.inputs.password.value}
             />
             
             <LoadingButton
             type="submit"
-            onClick={validateInputs}
-            loading={loading}
+            onClick={login}
+            loading={state.loading}
             loadingPosition="start"
             startIcon={<LoginIcon />}
             variant="outlined"
             >
-            {loading ? 'Entrando...' : 'Entrar'}
+            {state.loading ? 'Entrando...' : 'Entrar'}
             </LoadingButton>
 
             <div>

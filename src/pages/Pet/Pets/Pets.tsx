@@ -77,7 +77,7 @@ export default function Pets(){
                             className="cardMedia"
                             component="img"
                             image={
-                              import.meta.env.VITE_IMGS_PET_FOLDER +
+                              import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER +
                               pet.images[0]
                             }
                           />

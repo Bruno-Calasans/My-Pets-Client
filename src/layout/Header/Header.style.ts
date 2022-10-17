@@ -24,7 +24,6 @@ export const Content = styled.div`
 
 export const Logo = styled.a`
   display: flex;
-  /* justify-content: center; */
   
 `;
 

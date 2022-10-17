@@ -162,6 +162,5 @@ export interface ApiPetFinishAdoptionErrorResponse {
 
 export interface Auth {
   authenticated: boolean
-  token: string | null
   checked: boolean
 }
