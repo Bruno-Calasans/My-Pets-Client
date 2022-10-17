@@ -1,5 +1,5 @@
 
-import { Container } from "./Register.style";
+import { Container } from "./register.style";
 import { useReducer, useRef, useState } from 'react';
 
 // types
