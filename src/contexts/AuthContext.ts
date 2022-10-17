@@ -9,7 +9,7 @@ import {
   ApiErrorResponse,
 } from "../types/api.type";
 
-interface AuthContext {
+export interface AuthContextType {
   auth: Auth;
   register: (user: UserRegister) => Promise<ApiLoginSuccessResponse | ApiErrorResponse>;
   login: (user: UserLogin) => Promise<ApiLoginSuccessResponse | ApiErrorResponse>;
@@ -17,5 +17,5 @@ interface AuthContext {
 }
 
 // criando context
-export const AuthContext = createContext<AuthContext>({})
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 

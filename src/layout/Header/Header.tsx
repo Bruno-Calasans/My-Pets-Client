@@ -9,8 +9,9 @@ import {
 
 import { Container, Content, Logo } from "./header.style";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContextType } from "../../contexts/AuthContext";
 import Menu from './../../components/Menu/Menu';
+import { AuthContext } from './../../contexts/AuthContext';
 
 interface HeaderProps{
   logoSrc: string
@@ -18,7 +19,7 @@ interface HeaderProps{
 
 export default function Header({ logoSrc }: HeaderProps) {
 
-  const { auth, logout } = useContext(AuthContext);
+  const { auth, logout } = useContext(AuthContext) as AuthContextType
  
   return (
     <Container>

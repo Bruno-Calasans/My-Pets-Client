@@ -23,13 +23,13 @@ import { validateEmail, validatePassword } from '../../../schemas/userValidator'
 import formDataToObj from './../../../helpers/getObjFromFormData';
 
 // reducer and context
-import { AuthContext } from '../../../contexts/AuthContext';
+import { AuthContext, AuthContextType } from '../../../contexts/AuthContext';
 import { loginReducer, loginState } from "../../../reducer/loginReducer";
 
 export default function Login() {
 
     const [state, dispatch] = useReducer(loginReducer, loginState)
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext) as AuthContextType
     const form = useRef<HTMLFormElement | null>(null);
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

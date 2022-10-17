@@ -12,6 +12,7 @@ import {
   ApiErrorResponse,
 } from "../types/api.type";
 
+
 // registra o usuário
 export default function useAuth() {
 
@@ -45,14 +46,14 @@ export default function useAuth() {
     // set token in local storage, authorization header and auth state
     const setToken = (token: string) => {
         saveToken(token)
-        api.defaults.headers.authorization =  `Bearer ${token}`;
+        api.defaults.headers.common.authorization =  `Bearer ${token}`;
         setAuth({...auth, authenticated: true });
     };
   
     // remove token from local storage, authorization header and auth state
     const clearToken = () => {
       destroyToken();
-      api.defaults.headers.authorization = undefined;
+      api.defaults.headers.common.authorization = false;
       setAuth({ ...auth, authenticated: false });
     };
 

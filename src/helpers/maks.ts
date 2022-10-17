@@ -7,10 +7,7 @@ export function alphaMask(text: string) {
     return text.replace(regexNotAlpha, '')
 }
 
-// export function isAlpha(text: string) {
-//     return text.match(/^[a-zA-Z]+$/gi)
-// }
-  
+
 export function passwordMask(text: string) {
     return text.replace(/[\s]/gi, '')
 }
@@ -61,9 +58,12 @@ export function numberMask(text: string, float=false, negative=false) {
 
 export function floatFormat(text: string, cifra = "R$") {
     
-  text = text.constructor == Number ? text.toFixed(2) : text;
+  text = (text.constructor == Number) ? Number(text).toFixed(2) : text;
 
-  const valor = text.replace(/\D/g, "").replace(/^0*/, "").padStart(3, "0");
+  const valor = text
+    .replace(/\D/g, "")
+    .replace(/^0*/, "")
+    .padStart(3, "0");
 
   let p1 = valor.slice(0, -2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
   let p2 = valor.slice(-2);

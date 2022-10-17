@@ -43,7 +43,7 @@ import {
 } from "../../../schemas/userValidator";
 
 // reducer and context
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, AuthContextType } from "../../../contexts/AuthContext";
 import { userReducer, userState } from "../../../reducer/userReducer";
 
 // types
@@ -57,7 +57,7 @@ export default function Profile() {
 
     const [state, dispatch] = useReducer(userReducer, userState)
     const [preview, setPreview] = useState<File | null>(null);
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext) as AuthContextType
     const api = useApi();
     const form = useRef<HTMLFormElement | null>(null);
     

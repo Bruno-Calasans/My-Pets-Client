@@ -6,7 +6,7 @@ import { Container } from "./register.style";
 
 // react
 import { useState, useReducer, useContext, useRef } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, AuthContextType } from "../../../contexts/AuthContext";
 
 // helpers
 import {
@@ -55,7 +55,7 @@ import formDataToObj from "../../../helpers/getObjFromFormData";
 export default function Register() {
 
   const [state, dispatch] = useReducer(userReducer, userState);
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext) as AuthContextType
   const form = useRef<HTMLFormElement | null>(null)
 
   // when 
