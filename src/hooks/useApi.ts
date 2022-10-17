@@ -1,4 +1,6 @@
 
+import axios from 'axios';
+
 // react
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,40 +10,22 @@ import { getToken } from '../helpers/token';
 
 // types
 import {
-  ApiGetUserSuccessResponse,
-  ApiGetUserErrorResponse,
-  ApiGetUserByIdSuccessResponse,
-  ApiGetUserByIdErrorResponse,
   ApiUserEditSuccessResponse,
-  ApiUserEditErrorResponse,
-  ApiRegisterPetSuccessResponse,
-  ApiRegisterPetErrorResponse,
-  ApiGetMyPetsSuccessResponse,
-  ApiGetMyPetsErrorResponse,
-  ApiRemovePetSuccessResponse,
-  ApiRemovePetErrorResponse,
-  ApiGetPetsSuccessResponse,
-  ApiGetPetsErrorResponse,
-  ApiGetPetByIdSuccessResponse,
-  ApiGetPetByIdErrorResponse,
+  ApiUserSuccessResponse,
+  ApiErrorResponse,
+  ApiPetSuccessResponse,
   ApiPetEditSuccessResponse,
-  ApiPetEditErrorResponse,
-  ApiPetScheduleAdoptionSuccessResponse,
-  ApiPetScheduleAdoptionErrorResponse,
-  ApiGetAdoptionsSuccessResponse,
-  ApiGetAdoptionsErrorResponse,
-  ApiPetiFinishAdoptionSuccessResponse,
-  ApiPetFinishAdoptionErrorResponse
+  ApiPetAdoptionSuccessResponse,
 } from "../types/api.type";
 
-import { UserEdit } from '../types/user';
-import { PetRegister } from '../types/pet.type';
+import { UserEdit } from '../types/user.type';
 
 // custom hooks
 import useFlash from './useFlash';
 
 // api
 import api from "../utils/api";
+import { ApiPetsSuccessResponse } from './../types/api.type';
 
 export default function useApi(){
 
@@ -58,14 +42,15 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((rsp) => rsp.data)) as ApiGetUserSuccessResponse;
-          // createMessage({ msg: response.message, type: "success" });
+            .then((rsp) => rsp.data)) as ApiUserSuccessResponse;
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiGetUserErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async getUserById(id: string) {
@@ -73,13 +58,15 @@ export default function useApi(){
         try {
           const response = (await api
             .get(`/user/info/${id}`)
-            .then((rsp) => rsp.data)) as ApiGetUserByIdSuccessResponse;
+            .then((rsp) => rsp.data)) as ApiUserSuccessResponse;
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiGetUserByIdErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
 
       },
@@ -98,12 +85,14 @@ export default function useApi(){
           return response;
           
         } catch (e: any) {
-          const response = e.response?.data as ApiUserEditErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
-      async registerPet(pet: PetRegister) {
+      async registerPet(pet: FormData) {
         try {
           const response = (await api
             .post("/pet/register", pet, {
@@ -112,16 +101,18 @@ export default function useApi(){
                 "Content-Type": "multipart/form-data",
               },
             })
-            .then((rsp) => rsp.data)) as ApiRegisterPetSuccessResponse;
+            .then((rsp) => rsp.data)) as ApiPetSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           navigate("/user/mypets");
           return response;
 
-        } catch (e) {
-          const response = e.response?.data as ApiRegisterPetErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+        } catch (e: any) {
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async getMyPets() {
@@ -134,13 +125,15 @@ export default function useApi(){
                 "Content-Type": "multipart/form-data",
               },
             })
-            .then((rsp) => rsp.data)) as ApiGetMyPetsSuccessResponse;
+            .then((rsp) => rsp.data)) as ApiPetsSuccessResponse;
           return response;
 
-        } catch (e) {
-          const response = e.response?.data as ApiGetMyPetsErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+        } catch (e: any) {
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async removePetById(id: string) {
@@ -153,15 +146,16 @@ export default function useApi(){
                 "Content-Type": "multipart/form-data",
               },
             })
-            .then((rsp) => rsp.data)) as ApiRemovePetSuccessResponse;
-          // createMessage({ msg: response.message, type: "success" });
+            .then((rsp) => rsp.data)) as ApiPetSuccessResponse;
           createMessage({ msg: "Pet removido com sucesso", type: "success" });
           return response;
 
-        } catch (e) {
-          const response = e.response?.data as ApiRemovePetErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+        } catch (e: any) {
+          if (axios.isAxiosError(e)) {
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async getAllPets() {
@@ -169,24 +163,28 @@ export default function useApi(){
         try {
           const response = (await api
             .get(`/pet`)
-            .then((rsp) => rsp.data)) as ApiGetPetsSuccessResponse
+            .then((rsp) => rsp.data)) as ApiPetsSuccessResponse
           return response;
 
-        } catch (e) {
-          const response = e.response?.data as ApiGetPetsErrorResponse;
-          return response;
+        } catch (e: any) {
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            return response;
+          }
         }
       },
       async getPetById(id: string){
         try {
           const response = (await api
             .get(`/pet/info/${id}`)
-            .then((rsp) => rsp.data)) as  ApiGetPetByIdSuccessResponse
+            .then((rsp) => rsp.data)) as  ApiPetSuccessResponse
           return response;
 
-        } catch (e) {
-          const response = e.response?.data as ApiGetPetByIdErrorResponse;
-          return response;
+        } catch (e: any) {
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            return response;
+          }
         }
 
       },
@@ -202,19 +200,15 @@ export default function useApi(){
             .then((rsp) => rsp.data) as ApiPetEditSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
-          // createMessage({ msg: "Pet editado com sucesso", type: "success" });
           navigate('/user/mypets')
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetEditErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          // createMessage({
-          //   msg: "Error ao salvar edição do pet :(",
-          //   type: "error",
-          // });
-
-          return response;
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async getMyAdoptions() {
@@ -226,15 +220,17 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiGetAdoptionsSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetsSuccessResponse;
 
           // createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiGetAdoptionsErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async scheduleAdoption(id: string) {
@@ -244,16 +240,18 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               }
             })
-            .then((rsp) => rsp.data) as ApiPetScheduleAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetAdoptionSuccessResponse;
 
           navigate('/user/myadoptions')
           createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetScheduleAdoptionErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
       },
       async finishAdoption(id: string){
@@ -264,15 +262,17 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiPetiFinishAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetAdoptionSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetFinishAdoptionErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
 
       },
@@ -284,15 +284,17 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiPetiFinishAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetFinishAdoptionErrorResponse;
-          createMessage({ msg: response.message, type: "error" });
-          return response;
+          if(axios.isAxiosError(e)){
+            const response = e.response?.data as ApiErrorResponse;
+            createMessage({ msg: response.message, type: "error" });
+            return response;
+          }
         }
 
       },
@@ -304,14 +306,14 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiPetiFinishAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           navigate('/user/myadoptions', {replace: true})
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetFinishAdoptionErrorResponse;
+          const response = e.response?.data as ApiErrorResponse;
           createMessage({ msg: response.message, type: "error" });
           return response;
         }
@@ -325,13 +327,13 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiPetiFinishAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetFinishAdoptionErrorResponse;
+          const response = e.response?.data as ApiErrorResponse;
           createMessage({ msg: response.message, type: "error" });
           return response;
         }
@@ -345,13 +347,13 @@ export default function useApi(){
                 Authorization: `Bearer ${token}`
               },
             })
-            .then((rsp) => rsp.data) as ApiPetiFinishAdoptionSuccessResponse;
+            .then((rsp) => rsp.data) as ApiPetSuccessResponse;
 
           createMessage({ msg: response.message, type: "success" });
           return response;
 
         } catch (e: any) {
-          const response = e.response?.data as ApiPetFinishAdoptionErrorResponse;
+          const response = e.response?.data as ApiErrorResponse;
           createMessage({ msg: response.message, type: "error" });
           return response;
         }

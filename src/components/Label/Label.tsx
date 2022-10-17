@@ -1,5 +1,5 @@
 
-import { Container, Content, Lab } from "./Label.style";
+import { Container, Content, Lab } from "./label.style";
 
 interface LabelProps{
     start: string

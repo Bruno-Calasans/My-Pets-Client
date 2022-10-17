@@ -1,5 +1,5 @@
 
-import { UserFields, UserInput } from "../types/user";
+import { UserFields, UserInput } from "../types/user.type";
 
 interface UserInputs {
   firstName: UserInput;
@@ -55,13 +55,13 @@ export function userReducer(state: UserState, action: UserInputAction): UserStat
         inputs: payload,
       };
     }
-    case "SET_IMAGE": {
-      const { payload } = action;
-      return {
-        ...state,
-        inputs: { ...state.inputs, image: payload },
-      };
-    }
+    // case "SET_IMAGE": {
+    //   const { payload } = action;
+    //   return {
+    //     ...state,
+    //     inputs: { ...state.inputs, image: payload },
+    //   };
+    // }
     case "VALIDATE":
       const invalidInputs = [];
 

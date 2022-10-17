@@ -1,9 +1,16 @@
 
-import { Container } from "./MyAdoptions.style";
-import useApi from "./../../../hooks/useApi";
+
+document.title = 'my adoptions'
+
+// style
+import { Container } from "./myadoptions.style";
+
+// react 
 import { useState, useEffect } from 'react';
-import { ApiGetAdoptionsSuccessResponse } from '../../../types/api.type';
-import { Pet } from '../../../types/pet.type';
+import { useNavigate } from "react-router";
+
+// components
+import useApi from "./../../../hooks/useApi";
 import {
   Avatar,
   Button,
@@ -14,9 +21,15 @@ import {
   Typography,
 } from "@mui/material";
 
-import Label from "../../../components/Label/Label";
-import { useNavigate } from "react-router";
+// icons
 import { Cancel, VolunteerActivism } from "@mui/icons-material";
+
+// types
+import { ApiPetsSuccessResponse } from '../../../types/api.type';
+import { Pet } from '../../../types/pet.type';
+
+// my components
+import Label from "../../../components/Label/Label";
 
 export default function MyAdoptions(){
 
@@ -28,10 +41,9 @@ export default function MyAdoptions(){
     const loadAdoptions = async () => {
 
       setLoading(true);
-      const petResponse = await api.getMyAdoptions() as ApiGetAdoptionsSuccessResponse;
-
-      if(petResponse.pets){
-        setAdoptions(petResponse.pets);
+      const response = await api.getMyAdoptions() as ApiPetsSuccessResponse;
+      if(response.pets){
+        setAdoptions(response.pets);
       }
 
       setLoading(false);

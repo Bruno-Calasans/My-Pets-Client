@@ -1,5 +1,5 @@
 
-import { UserInput, LoginFields } from "../types/user";
+import { UserInput, LoginFields } from "../types/user.type";
 
 
 interface UserLoginState {

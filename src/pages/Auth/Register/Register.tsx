@@ -2,7 +2,7 @@
 document.title = 'login'
 
 // style
-import { Container } from "./Register.style";
+import { Container } from "./register.style";
 
 // react
 import { useState, useReducer, useContext, useRef } from "react";
@@ -16,7 +16,7 @@ import {
 } from "../../../helpers/maks";
 
 // types
-import { UserEdit, UserFields, UserRegister } from "../../../types/user";
+import { UserEdit, UserFields, UserRegister } from "../../../types/user.type";
 
 // mui components
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -56,7 +56,7 @@ export default function Register() {
 
   const [state, dispatch] = useReducer(userReducer, userState);
   const authCtx = useContext(AuthContext)
-  const form = useRef(null)
+  const form = useRef<HTMLFormElement | null>(null)
 
   // when 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +98,7 @@ export default function Register() {
         }
       }
 
-    }catch(e){
+    }catch(e: any){
       error = true
       msg = e.errors[0]
       valid = false;
@@ -122,7 +122,7 @@ export default function Register() {
 
     dispatch({ type: "VALIDATE" });
 
-    const formData = new FormData(form.current)
+    const formData = new FormData(form.current as HTMLFormElement)
     const user = formDataToObj<UserRegister>(formData)
 
     // start request

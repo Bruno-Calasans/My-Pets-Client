@@ -1,38 +1,30 @@
 
-document.title = 'home'
+document.title = 'pets'
+
+// style
+import { Container, PetsList } from "./pets.style"
+
+// react 
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router";
+
+// components
 import {
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react"
-import { Container, PetsList } from "./Pets.style"
 
+// types
 import { Pet } from "../../../types/pet.type"
 import useApi from "../../../hooks/useApi"
 
-import { useNavigate } from "react-router";
-import { ApiGetPetsSuccessResponse, ApiGetUserByIdSuccessResponse } from "../../../types/api.type";
-import  { User } from "../../../types/user";
-import { AuthContext } from "../../../contexts/AuthContext";
-
 import Label from "../../../components/Label/Label";
+import { ApiPetsSuccessResponse } from "../../../types/api.type";
 
-
-function formatDate(timestamp: Date | EpochTimeStamp, separator='/'){
-
-  const date = new Date(timestamp)
-  const day = date.getUTCDay()
-  const month = date.getUTCMonth()
-  const year = date.getFullYear()
-
-  return `${day}${separator}${month}${separator}${year}`
-
-}
+import formatDate from "../../../helpers/formatDate";
 
 export default function Pets(){
 
@@ -41,7 +33,7 @@ export default function Pets(){
     const navigate = useNavigate()
 
     const loadPets = async () => {
-      const response = await api.getAllPets() as ApiGetPetsSuccessResponse
+      const response = await api.getAllPets() as ApiPetsSuccessResponse
       if(response.pets){
         setPets(response.pets)
       }
@@ -68,7 +60,6 @@ export default function Pets(){
 
                     return (
                       <Card className="card" component="div" key={index}>
-                        
                         <CardActionArea
                           className="cardArea"
                           onClick={(e) => showPetInfo(pet._id)}
@@ -93,7 +84,7 @@ export default function Pets(){
                                 text={
                                   pet.adoption.owner.firstName +
                                   " " +
-                                  pet.adoption.owner.lastName 
+                                  pet.adoption.owner.lastName
                                 }
                               />
                             </Typography>
@@ -112,7 +103,9 @@ export default function Pets(){
                               className="petAvaliable"
                               component="div"
                             >
-                              {pet.adoption.status == 1 ? "Indisponível" : ""}
+                              {pet.adoption.status == "finished"
+                                ? "Indisponível"
+                                : ""}
                             </Typography>
                           </CardContent>
                         </CardActionArea>

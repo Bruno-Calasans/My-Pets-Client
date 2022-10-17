@@ -5,7 +5,7 @@ document.title = 'mypets'
 import { useState, useEffect } from 'react';
 
 // style
-import { Container, PetsList } from "./MyPets.style";
+import { Container, PetsList } from "./mypets.style";
 
 // mui components
 import {
@@ -26,10 +26,7 @@ import { Add, Delete, Edit, Check, Cancel } from '@mui/icons-material';
 
 // types
 import { Pet } from '../../../types/pet.type';
-import {
-  ApiGetMyPetsSuccessResponse,
-  ApiPetFinishAdoptionErrorResponse,
-} from "./../../../types/api.type";
+import { ApiPetsSuccessResponse } from "./../../../types/api.type";
 
 // custom hooks
 import useApi from './../../../hooks/useApi';
@@ -40,7 +37,7 @@ export default function MyPets() {
     const api = useApi()
 
     const loadPets = async () => {
-      const response = (await api.getMyPets()) as ApiGetMyPetsSuccessResponse;
+      const response = (await api.getMyPets()) as ApiPetsSuccessResponse;
       if (response.pets) {
         setPets(response.pets);
       }

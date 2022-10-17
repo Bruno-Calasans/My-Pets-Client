@@ -1,8 +1,10 @@
 
 document.title = 'profile'
 
-//
-import { Container } from "./Profile.style";
+// style
+import { Container } from "./profile.style";
+
+// react
 import { useState, useEffect, useReducer, useRef, useContext } from "react";
 
 // components from MUI
@@ -28,11 +30,10 @@ import {
     Upload
 } from "@mui/icons-material";
   
-import { userReducer, userState } from "../../../reducer/userReducer";
+// helpers
 import { phoneMask, alphaMask, passwordMask } from "../../../helpers/maks";
 import formDataToObj from "../../../helpers/getObjFromFormData";
 
-// validators
 import {
   validateName,
   validateEmail,
@@ -41,10 +42,16 @@ import {
   comparePasswords
 } from "../../../schemas/userValidator";
 
-import { UserEdit, UserFields } from "../../../types/user";
-import { ApiGetUserSuccessResponse } from "../../../types/api.type";
-import useApi from '../../../hooks/useApi';
+// reducer and context
 import { AuthContext } from "../../../contexts/AuthContext";
+import { userReducer, userState } from "../../../reducer/userReducer";
+
+// types
+import { UserEdit, UserFields } from "../../../types/user.type";
+import { ApiErrorResponse, ApiUserSuccessResponse } from "../../../types/api.type";
+
+// custom hook
+import useApi from '../../../hooks/useApi';
 
 export default function Profile() {
 
@@ -52,11 +59,11 @@ export default function Profile() {
     const [preview, setPreview] = useState<File | null>(null);
     const authCtx = useContext(AuthContext)
     const api = useApi();
-    const form = useRef(null);
+    const form = useRef<HTMLFormElement | null>(null);
     
     const loadUser = async () => {
       
-      const response = await api.checkUser() as ApiGetUserSuccessResponse
+      const response = await api.checkUser() as ApiUserSuccessResponse
 
       if(response.user){
         const { firstName, lastName, email, phone, image } = response.user;
@@ -146,10 +153,11 @@ export default function Profile() {
     }
 
     const previewHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const image = e.target.files[0]
-      if(image){ setPreview(image) }
+      if(e.target.files){ 
+        setPreview(e.target.files[0]) 
+      }
     }
-
+    
     const update = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
       dispatch({ type: "START_LOADING" });
@@ -158,7 +166,7 @@ export default function Profile() {
       dispatch({ type: "VALIDATE" });
 
       // creating a user obj
-      const formData = new FormData(form.current)
+      const formData = new FormData(form.current as HTMLFormElement)
       const user = formDataToObj<UserEdit>(formData)
 
       // if user don't want to redefine your password
@@ -168,7 +176,7 @@ export default function Profile() {
       }
 
       // starting update
-      const response = await api.editUser(user)
+      const response = await api.editUser(user) as ApiErrorResponse
       if (!response.error) { loadUser() }
 
       // scrolling to the top of the page

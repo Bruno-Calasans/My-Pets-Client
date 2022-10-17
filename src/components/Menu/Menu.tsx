@@ -1,5 +1,5 @@
 
-import { Container } from "./Menu.style";
+import { Container } from "./menu.style";
 import { ButtonGroup, IconButton } from "@mui/material";
 import { Close, Menu as MenuIcon } from "@mui/icons-material";
 import { useState } from "react";

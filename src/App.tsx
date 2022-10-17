@@ -22,6 +22,8 @@ import PetRegister from './pages/Pet/Register/Register'
 import PetInfo from "./pages/Pet/Info/Info";
 
 import CheckAuth from "./components/CheckAuth/CheckAuth";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
+
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
       <Main>
         <Routes>
           <Route index element={<Pets />} />
+
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route
@@ -65,7 +68,15 @@ function App() {
               </CheckAuth>
             }
           />
-          <Route path="/pet/register" element={<PetRegister />} />
+          <Route
+            path="/pet/register"
+            element={
+              <CheckAuth>
+                <PetRegister />
+              </CheckAuth>
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Main>
       <Footer

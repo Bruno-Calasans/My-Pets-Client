@@ -1,21 +1,18 @@
 
 import { createContext } from "react";
-import { UserRegister } from "../types/user";
-
-import { UserLogin } from './../types/user';
+import { UserRegister } from "../types/user.type";
+import { UserLogin } from '../types/user.type';
 
 import {
   Auth,
-  ApiRegisterSuccessResponse,
-  ApiRegisterErrorResponse,
   ApiLoginSuccessResponse,
-  ApiLoginErrorResponse
+  ApiErrorResponse,
 } from "../types/api.type";
 
 interface AuthContext {
   auth: Auth;
-  register: (user: UserRegister) => Promise<ApiRegisterSuccessResponse | ApiRegisterErrorResponse>;
-  login: (user: UserLogin) => Promise<ApiLoginSuccessResponse | ApiLoginErrorResponse>;
+  register: (user: UserRegister) => Promise<ApiLoginSuccessResponse | ApiErrorResponse>;
+  login: (user: UserLogin) => Promise<ApiLoginSuccessResponse | ApiErrorResponse>;
   logout: () => void;
 }
 

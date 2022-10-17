@@ -1,18 +1,16 @@
 
 import api from "../utils/api";
 import useFlash from "./useFlash";
-import { UserRegister, UserLogin } from "../types/user";
+import { UserRegister, UserLogin } from "../types/user.type";
 import { saveToken, getToken, destroyToken } from "../helpers/token";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Auth,
-  ApiRegisterSuccessResponse,
-  ApiRegisterErrorResponse,
+  ApiUserRegisterSuccessResponse,
   ApiLoginSuccessResponse,
-  ApiLoginErrorResponse,
+  ApiErrorResponse,
 } from "../types/api.type";
-
 
 // registra o usuário
 export default function useAuth() {
@@ -81,7 +79,7 @@ export default function useAuth() {
                 // get data from api
                 const response = await api
                   .post("/user/register", user)
-                  .then(rsp => rsp.data) as ApiRegisterSuccessResponse
+                  .then(rsp => rsp.data) as ApiUserRegisterSuccessResponse
 
                 // set flash message
                 createMessage({
@@ -92,17 +90,12 @@ export default function useAuth() {
                 // save token in all necessary pkaces
                 setToken(response.token)
 
-                // createMessage({
-                //   msg: "Usuário registrado com sucesso",
-                //   type: "success",
-                // });
-
                 // redirect to home
                 navigate('/')
                 return response
 
             } catch (e: any) {
-                const response = e.response?.data as ApiRegisterErrorResponse
+                const response = e.response?.data as ApiErrorResponse
                 createMessage({ msg: response.message, type: "error"});
                 return response
             }
@@ -136,7 +129,7 @@ export default function useAuth() {
                 return response
                 
             } catch (e: any) {
-                const response = e.response?.data as ApiLoginErrorResponse
+                const response = e.response?.data as ApiErrorResponse
                 createMessage({ msg: response.message, type: "error"});
                 return response
             }

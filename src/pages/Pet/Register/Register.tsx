@@ -1,9 +1,9 @@
 
-import { Container } from "./Register.style";
+import { Container } from "./register.style";
 import { useReducer, useRef, useState } from 'react';
 
 // types
-import type { Pet, PetColors, PetFields, PetRegister } from "../../../types/pet.type";
+import type { PetColors, PetFields } from "../../../types/pet.type";
 
 // mui components
 import {
@@ -36,7 +36,7 @@ export default function Register(){
   const [pet, dispatch] = useReducer(petReducer, petState);
   const [preview, setPreview] = useState<File[]>([])
   const api = useApi()
-  const form = useRef(null);
+  const form = useRef<HTMLFormElement | null>(null);
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -77,10 +77,10 @@ export default function Register(){
       msg = e.errors[0];
     }
 
-    if(inputName === 'images'){
-      const imgs = Object.values(e.target.files)
-      return dispatch({type: 'SET_IMAGES', payload: imgs})
-    }
+    // if(inputName === 'images'){
+    //   const imgs = Object.values(e.target.files)
+    //   return dispatch({type: 'SET_IMAGES', payload: imgs})
+    // }
 
     dispatch({
       type: "SET_FIELD",
@@ -97,8 +97,10 @@ export default function Register(){
   }
 
   const previewHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const images = Array.from(e.target.files)
-    setPreview(images)
+    if(e.target.files){
+      const images = Array.from(e.target.files)
+      setPreview(images)
+    }
   }
 
   const register = async () => {
@@ -107,8 +109,7 @@ export default function Register(){
 
     dispatch({ type: "VALIDATE" });
 
-    const formData = new FormData(form.current)
-    // const petToSend = formDataToObj<PetRegister>(formData)
+    const formData = new FormData(form.current as HTMLFormElement)
     await api.registerPet(formData)
 
     // scroll to the top

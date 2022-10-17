@@ -1,15 +1,29 @@
 
 document.title = "login";
-import { Container } from "./Login.style";
-import { useReducer, useRef, useState } from "react";
-import LoadingButton from '@mui/lab/LoadingButton';
-import { TextField, Link} from "@mui/material";
-import { Login as LoginIcon } from "@mui/icons-material";
+
+// react
+import { useReducer, useRef } from "react";
 import { useContext } from "react";
-import { AuthContext } from '../../../contexts/AuthContext';
-import { LoginFields, UserLogin } from "../../../types/user";
+
+// style
+import { Container } from "./login.style";
+
+// components
+import { TextField, Link} from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+
+// icons
+import { Login as LoginIcon } from "@mui/icons-material";
+
+// types
+import { LoginFields, UserLogin } from "../../../types/user.type";
+
+// helpers
 import { validateEmail, validatePassword } from '../../../schemas/userValidator';
 import formDataToObj from './../../../helpers/getObjFromFormData';
+
+// reducer and context
+import { AuthContext } from '../../../contexts/AuthContext';
 import { loginReducer, loginState } from "../../../reducer/loginReducer";
 
 export default function Login() {
@@ -37,7 +51,7 @@ export default function Login() {
           validatePassword(inputValue)
         }
           
-      } catch (e) {
+      } catch (e: any) {
         error = true
         msg = e.errors[0]
         valid = false;
@@ -52,16 +66,13 @@ export default function Login() {
     }
 
     const login = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-
       dispatch({ type: "START_LOADING" });
-      const formData = new FormData(form.current)
+      const formData = new FormData(form.current as HTMLFormElement)
       const user = formDataToObj<UserLogin>(formData)
       dispatch({ type: "VALIDATE" });
       await authCtx.login(user);
       dispatch({ type: "STOP_LOADING" });
     }
-
-    console.log(state);
 
     return (
         <>

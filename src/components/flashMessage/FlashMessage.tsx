@@ -1,7 +1,7 @@
 
 import { Alert, AlertTitle, Collapse } from "@mui/material";
 import { useState, useEffect } from 'react';
-import { FlashMessage as FM} from "../../types/flashMessage.type";
+import { FlashMessage as FM} from "../../types/flashmessage.type";
 import event from '../../utils/event';
 
 interface FlashMessageConfigs{
@@ -34,7 +34,7 @@ export default function FlashMessage() {
     }, 4000)
 
     // clear effect
-    // return clearTimeout(id)
+    return clearTimeout(id)
     
   }, [])
 

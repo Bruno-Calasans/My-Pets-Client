@@ -10,7 +10,7 @@ import { Pet } from "../../../types/pet.type";
 import useApi from './../../../hooks/useApi';
 
 // types
-import { ApiGetPetByIdSuccessResponse } from './../../../types/api.type';
+import { ApiPetSuccessResponse } from './../../../types/api.type';
 
 // my components
 import Label from "../../../components/Label/Label";
@@ -34,17 +34,19 @@ export default function Info(){
 
     const [pet, setPet] = useState<Pet | null>(null)
     const [loading, setLoading] = useState(false)
-    const params = useParams<{id: string}>()
+    const params = useParams<{id?: string}>()
     const api = useApi()
 
     const loadPet = async () => {
-      const response = await api.getPetById(params.id) as ApiGetPetByIdSuccessResponse;
+      if(!params.id){ return }
+      const response = await api.getPetById(params.id) as ApiPetSuccessResponse;
       if (response.pet) {
         setPet(response.pet);
       }
     };
 
     const schedule = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if(!params.id){ return }
       scrollTo(0, 0)
       setLoading(true);
       await api.scheduleAdoption(params.id);
@@ -52,27 +54,20 @@ export default function Info(){
     };
 
     useEffect(() => { 
-      // setLoading(true);
+      setLoading(true);
       loadPet() 
-      // setLoading(false);
+      setLoading(false);
     }, [])
 
     return (
       <Container>
         <h1 className="pageName">Adotar</h1>
 
-        {pet && (
+        {pet ? (
           <Card className="card">
-
-            <ImageList
-            className="imageList" 
-            cols={2} 
-            rowHeight="auto">
-
+            <ImageList className="imageList" cols={2} rowHeight="auto">
               {pet.images.map((img, index) => (
-                <ImageListItem 
-                key={index} 
-                className="imageItem">
+                <ImageListItem key={index} className="imageItem">
                   <img
                     src={import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER + img}
                     alt={pet.name}
@@ -83,41 +78,27 @@ export default function Info(){
             </ImageList>
 
             <CardContent className="cardContent">
-
-              <Typography
-                className="petName"
-                component="div"
-                gutterBottom
-              >
+              <Typography className="petName" component="div" gutterBottom>
                 {pet.name}
               </Typography>
 
-              <Typography
-                className="petInfo petAge"
-                component="div"
-              >
-                <Label start="Idade:" text={pet.age} end="meses"/>
-                
+              <Typography className="petInfo petAge" component="div">
+                <Label start="Idade:" text={pet.age} end="meses" />
               </Typography>
 
-              <Typography
-                className="petInfo petWeight"
-                component="div"
-              >
-                <Label start="Peso:" text={pet.weight} end="Kg(s)"/>
+              <Typography className="petInfo petWeight" component="div">
+                <Label start="Peso:" text={pet.weight} end="Kg(s)" />
               </Typography>
 
-              <Typography 
-              className="petInfo petColor" 
-              component="div">
-                <Label start="Cor:" text={pet.color}/>
+              <Typography className="petInfo petColor" component="div">
+                <Label start="Cor:" text={pet.color} />
               </Typography>
-
             </CardContent>
 
             <CardActions className="cardActions">
-
-              {["none", "cancelled", "returned"].includes(pet.adoption.status) ?  (
+              {["none", "cancelled", "returned"].includes(
+                pet.adoption.status
+              ) ? (
                 <LoadingButton
                   className="scheduleAdoptionBtn"
                   type="submit"
@@ -130,15 +111,16 @@ export default function Info(){
                   {loading ? "Agendando..." : "Agendar Visita"}
                 </LoadingButton>
               ) : (
-                <Typography 
-                className="scheduleAdoptionMsg"
-                >
+                <Typography className="scheduleAdoptionMsg">
                   Visita já foi agendada
                 </Typography>
               )}
-
             </CardActions>
           </Card>
+        ) : (
+          <div className="noContentMsg">
+            Pet não existe ou não foi encontrado :(
+          </div>
         )}
       </Container>
     );

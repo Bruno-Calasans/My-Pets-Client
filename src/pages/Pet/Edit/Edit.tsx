@@ -1,21 +1,25 @@
 
-import { Container } from "./Edit.style";
+
+document.title = 'pet edit'
+
+// style
+import { Container } from "./edit.style";
+
+// react
 import { useEffect, useState, useReducer, useRef } from "react";
 import { useParams } from "react-router-dom"
-import useApi from "../../../hooks/useApi"
-import { ApiGetPetByIdSuccessResponse } from "../../../types/api.type"
+
 
 // types
 import type {
   PetColors,
-  PetEdit,
   PetFields,
 } from "../../../types/pet.type";
+import { ApiPetSuccessResponse } from "../../../types/api.type";
 
 // mui components
 import {
   FormControl,
-  Avatar,
   IconButton,
   InputLabel,
   MenuItem,
@@ -35,19 +39,22 @@ import { Upload,  Save } from "@mui/icons-material";
 import { petReducer, petState, PetColorList } from "../../../reducer/petReducer";
 import { validateName, validateNumber} from "../../../schemas/userValidator";
 import { alphaMask, floatFormat, numberMask } from "../../../helpers/maks";
-import formDataToObj from "../../../helpers/getObjFromFormData";
 
+// custom hook
+import useApi from "../../../hooks/useApi"
 
 export default function Edit(){
 
     const [pet, dispatch] = useReducer(petReducer, petState);
     const [preview, setPreview] = useState<File[]>([])
-    const form = useRef<HTMLFormElement>();
+    const form = useRef<HTMLFormElement | null>(null);
     const params = useParams<{id: string}>()
     const api = useApi()
 
     const loadPet = async () => {
-        const response = await api.getPetById(params.id) as ApiGetPetByIdSuccessResponse
+
+        if(!params.id){ return }
+        const response = await api.getPetById(params.id) as ApiPetSuccessResponse
 
         if(response.pet){
             const { pet } = response;
@@ -104,10 +111,10 @@ export default function Edit(){
           msg = e.errors[0];
         }
     
-        if(inputName === 'images'){
-          const imgs = Object.values(e.target.files)
-          return dispatch({type: 'SET_IMAGES', payload: imgs})
-        }
+        // if(inputName === 'images' && e.target.files){
+        //   const imgs = Object.values(e.target.files)
+        //   return dispatch({type: 'SET_IMAGES', payload: imgs})
+        // }
     
         dispatch({
           type: "SET_FIELD",
@@ -124,12 +131,17 @@ export default function Edit(){
     }
     
     const previewHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+      if(e.target.files){
         const images = Array.from(e.target.files)
         setPreview(images)
+      }
     }
     
     const edit = async () => {
         
+      if(!form.current || !params.id){ return }
+      
       dispatch({ type: "START_LOADING" });
   
       dispatch({ type: "VALIDATE" });
@@ -148,7 +160,9 @@ export default function Edit(){
         <h1 className="pageName">Editar Pet</h1>
 
         <Container ref={form} onSubmit={(e) => e.preventDefault()}>
+          
           <FormControl className="imgsPreview">
+
             {preview.length > 0 ? (
               <ImageList
                 sx={{ width: "100%", height: 200 }}
@@ -161,6 +175,7 @@ export default function Edit(){
                   </ImageListItem>
                 ))}
               </ImageList>
+
             ) : (
               <ImageList
                 sx={{ width: "100%", height: 200 }}
@@ -171,7 +186,6 @@ export default function Edit(){
                   <ImageListItem key={index}>
                     <img
                       src={import.meta.env.VITE_PET_IMGS_UPLOAD_FOLDER + img}
-                      loading="lazy"
                     />
                   </ImageListItem>
                 ))}

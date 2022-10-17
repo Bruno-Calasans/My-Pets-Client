@@ -41,14 +41,24 @@ export interface User {
   updatedAt: Date
 }
 
+export interface ConfidentialUser {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  image: string
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface UserEdit {
-  firstName?: string
-  lastName?: string
-  email?: string
-  phone?: string
-  password?: string
-  confirmationPassword?: string
-  image?: BinaryData
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  password?: string;
+  confirmationPassword?: string;
+  image?: File
 }
 
 export interface UserContact {

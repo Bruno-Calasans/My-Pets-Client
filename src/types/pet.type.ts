@@ -1,4 +1,4 @@
-import { UserContact } from "./user";
+import { UserContact } from "./user.type";
 
 export type PetFields = 'name' | 'age' | 'weight' | 'color' | 'images'
 export type PetColors = 'preto' | 'branco'| 'cinza'| 'amarelo' |'misturado'
@@ -44,8 +44,7 @@ export interface PetEdit {
     color?: string;
     images?: File[]
 }
-  
-  
+
 export interface PetInput {
     value: string
     error: boolean
@@ -58,22 +57,7 @@ export interface PetInputs {
     age: PetInput
     weight: PetInput
     color: PetColors
-    images: File[]
-}
-
-export interface PetIOptinalInput {
-    value?: string
-    error?: boolean
-    msg?: string
-    valid?: boolean
-}
-  
-export interface PetInputs {
-    name: PetInput
-    age: PetInput
-    weight: PetInput
-    color: PetColors
-    images: File[]
+    images: String[]
 }
 
 export interface PetState {

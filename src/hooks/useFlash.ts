@@ -1,7 +1,7 @@
 
 
 import event from '../utils/event'
-import { FlashMessage } from "../types/flashMessage.type"
+import { FlashMessage } from "../types/flashmessage.type"
 
 const useFlash = () => {
 

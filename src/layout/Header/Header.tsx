@@ -7,7 +7,7 @@ import {
   AccountCircle,
 } from "@mui/icons-material";
 
-import { Container, Content, Logo } from "./Header.style";
+import { Container, Content, Logo } from "./header.style";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Menu from './../../components/Menu/Menu';
@@ -50,7 +50,7 @@ export default function Header({ logoSrc }: HeaderProps) {
                 </Button>
 
                 <Button
-                  href="/auth/login"
+                  // href="/auth/login"
                   id="logoutBtn"
                   onClick={logout}
                   startIcon={<Logout />}
