@@ -1,7 +1,7 @@
 
 
 import { Container } from "./Main.style";
-import FlashMessage from "../../components/FlashMessage/FlashMessage";
+import FlashMessage from "../../components/flashMessage/FlashMessage";
 
 interface mainProps {
   children: JSX.Element
