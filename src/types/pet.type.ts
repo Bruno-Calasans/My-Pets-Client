@@ -1,5 +1,6 @@
-import { UserContact } from "./user.type";
 
+import { UserContact } from "./user.type";
+import { Input } from "./input.type";
 export type PetFields = 'name' | 'age' | 'weight' | 'color' | 'images'
 export type PetColors = 'preto' | 'branco'| 'cinza'| 'amarelo' |'misturado'
 
@@ -18,6 +19,7 @@ export interface Pet {
     age: string;
     weight: string;
     color: PetColors;
+    description: string
     images: String[];
     adoption: {
         _id: string
@@ -34,6 +36,7 @@ export interface PetRegister {
     age: string;
     weight: string;
     color: string;
+    description: string
     images: File[]
 }
 
@@ -42,21 +45,16 @@ export interface PetEdit {
     age?: string;
     weight?: string;
     color?: string;
+    description?: string
     images?: File[]
 }
 
-export interface PetInput {
-    value: string
-    error: boolean
-    msg: string
-    valid: boolean
-}
-
 export interface PetInputs {
-    name: PetInput
-    age: PetInput
-    weight: PetInput
+    name: Input
+    age: Input
+    weight: Input
     color: PetColors
+    description: Input
     images: String[]
 }
 

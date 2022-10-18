@@ -1,8 +1,7 @@
 
-document.title = 'pet info'
 // react
-import { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 
 // style
 import { Container } from "./info.style";
@@ -23,12 +22,17 @@ import {
   Typography,
   ImageList,
   ImageListItem,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 
 import { LoadingButton } from "@mui/lab";
 
 // mui icons
-import { Schedule } from "@mui/icons-material";
+import { Schedule, ExpandMore } from "@mui/icons-material";
+import { AuthContext } from '../../../contexts/AuthContext';
+import useFlash from '../../../hooks/useFlash';
 
 export default function Info(){
 
@@ -36,6 +40,9 @@ export default function Info(){
     const [loading, setLoading] = useState(false)
     const params = useParams<{id?: string}>()
     const api = useApi()
+    const authCtx = useContext(AuthContext)
+    const navigate = useNavigate()
+    const {createMessage} = useFlash()
 
     const loadPet = async () => {
       if(!params.id){ return }
@@ -47,6 +54,11 @@ export default function Info(){
 
     const schedule = async (e: React.MouseEvent<HTMLButtonElement>) => {
       if(!params.id){ return }
+
+      if(!authCtx?.auth.authenticated){ 
+        createMessage({msg: "Você precisar estar logado para agendar uma visita", type: 'info'})
+        return navigate('/auth/login')
+      }
       scrollTo(0, 0)
       setLoading(true);
       await api.scheduleAdoption(params.id);
@@ -93,6 +105,23 @@ export default function Info(){
               <Typography className="petInfo petColor" component="div">
                 <Label start="Cor:" text={pet.color} />
               </Typography>
+
+              <Accordion className='accordion'>
+
+                <AccordionSummary
+                  className='accordionHeader'
+                  expandIcon={<ExpandMore className='accordionExpandIcon'/>}
+                >
+                  <Typography className='accordionTitle'>Descrição</Typography>
+                </AccordionSummary>
+
+                <AccordionDetails className='accordionDetails'>
+                  <Typography>
+                    {pet.description}
+                  </Typography>
+                </AccordionDetails>
+
+              </Accordion>
             </CardContent>
 
             <CardActions className="cardActions">

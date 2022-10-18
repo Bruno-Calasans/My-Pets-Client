@@ -1,5 +1,4 @@
 
-document.title = 'pets'
 
 // style
 import { Container, PetsList } from "./pets.style"

@@ -166,13 +166,16 @@ export default function Profile() {
       dispatch({ type: "VALIDATE" });
 
       // creating a user obj
-      const formData = new FormData(form.current as HTMLFormElement)
-      const user = formDataToObj<UserEdit>(formData)
+      const user = new FormData(form.current as HTMLFormElement)
+      // const user = formDataToObj<UserEdit>(formData)
 
       // if user don't want to redefine your password
-      if(!user.password && !user.confirmationPassword) {
-        delete user.password
-        delete user.confirmationPassword
+      if (
+        !state.inputs.password.value &&
+        !state.inputs.confirmationPassword.value
+      ) {
+        user.delete("password");
+        user.delete("confirmationPassword");
       }
 
       // starting update

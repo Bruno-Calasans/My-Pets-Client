@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.section`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
 
   a {
@@ -23,7 +24,6 @@ export const PetsList = styled.div`
   margin-bottom: 5px;
 
   .card {
-    
     background-color: lightcyan;
     opacity: 0.9;
 
@@ -88,7 +88,7 @@ export const PetsList = styled.div`
     }
   }
 
-  @media (max-width: 1100px){
+  @media (max-width: 1200px){
     grid-template-columns: 1fr 1fr 1fr;
     
   }

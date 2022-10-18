@@ -24,7 +24,8 @@ import {
   TextField,
   SelectChangeEvent,
   ImageList,
-  ImageListItem
+  ImageListItem,
+  TextareaAutosize,
 } from "@mui/material";
 
 import { LoadingButton } from "@mui/lab";
@@ -56,20 +57,34 @@ export default function Edit(){
         if(response.pet){
             const { pet } = response;
             dispatch({ type: "START_LOADING" });
-            dispatch({type: 'SET_FIELDS', payload: {
-                name: {value: pet.name, error: false, msg: '', valid: true},
-                age: {value: pet.age, error: false, msg: '', valid: true},
-                weight: {value: pet.weight, error: false, msg: '', valid: true},
+            dispatch({
+              type: "SET_FIELDS",
+              payload: {
+                name: { value: pet.name, error: false, msg: "", valid: true },
+                age: { value: pet.age, error: false, msg: "", valid: true },
+                weight: {
+                  value: pet.weight,
+                  error: false,
+                  msg: "",
+                  valid: true,
+                },
                 color: pet.color,
+                description: {
+                  value: pet.description,
+                  error: false,
+                  msg: "",
+                  valid: true,
+                },
                 images: pet.images,
-            }})
+              },
+            });
             dispatch({ type: "STOP_LOADING" });
         }
     }
 
     useEffect(() => { loadPet()  }, [])
 
-    const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
         const inputName = e.target.getAttribute("name") as PetFields
         let inputValue = e.target.value // valor que será inserido
@@ -107,12 +122,7 @@ export default function Edit(){
           valid = false;
           msg = e.errors[0];
         }
-    
-        // if(inputName === 'images' && e.target.files){
-        //   const imgs = Object.values(e.target.files)
-        //   return dispatch({type: 'SET_IMAGES', payload: imgs})
-        // }
-    
+
         dispatch({
           type: "SET_FIELD",
           fieldName: inputName,
@@ -157,9 +167,7 @@ export default function Edit(){
         <h1 className="pageName">Editar Pet</h1>
 
         <Container ref={form} onSubmit={(e) => e.preventDefault()}>
-          
           <FormControl className="imgsPreview">
-
             {preview.length > 0 ? (
               <ImageList
                 sx={{ width: "100%", height: 200 }}
@@ -172,7 +180,6 @@ export default function Edit(){
                   </ImageListItem>
                 ))}
               </ImageList>
-
             ) : (
               <ImageList
                 sx={{ width: "100%", height: 200 }}
@@ -240,6 +247,25 @@ export default function Edit(){
             onChange={inputHandler}
             value={pet.inputs.weight.value}
           />
+          <InputLabel>Descrição</InputLabel>
+          <FormControl>
+            <TextareaAutosize
+              className="petDescription"
+              name="description"
+              maxRows={4}
+              maxLength={1000}
+              placeholder="Breve descrição do pet"
+              onChange={inputHandler}
+              value={pet.inputs.description.value}
+              style={{
+                minWidth: "100%",
+                maxWidth: "100%",
+                minHeight: "100px",
+                maxHeight: "200px",
+                padding: "5px",
+              }}
+            />
+          </FormControl>
 
           <FormControl variant="standard">
             <InputLabel id="color-selector">Cor</InputLabel>

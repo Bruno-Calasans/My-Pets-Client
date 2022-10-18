@@ -267,7 +267,7 @@ export default function Register() {
           {state.loading ? 'Criando' : 'Criar'}
         </LoadingButton>
         <div>
-        Já tem conta? <Link href="/login">Clique aqui</Link>
+        Já tem conta? <Link href="/auth/login">Clique aqui</Link>
         </div>
       </Container>
     </>

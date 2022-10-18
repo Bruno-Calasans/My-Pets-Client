@@ -46,7 +46,7 @@ export default function useAuth() {
     // set token in local storage, authorization header and auth state
     const setToken = (token: string) => {
         saveToken(token)
-        api.defaults.headers.common.authorization =  `Bearer ${token}`;
+        // api.defaults.headers.common.authorization =  `Bearer ${token}`;
         setAuth({...auth, authenticated: true });
     };
   
@@ -110,7 +110,7 @@ export default function useAuth() {
             createMessage({ msg: "Deslogado com sucesso", type: "success" });
 
             // redirect to login page
-            // navigate('/auth/login')
+            navigate('/auth/login')
         },
         async login(user: UserLogin){
 

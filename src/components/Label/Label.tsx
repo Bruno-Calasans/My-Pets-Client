@@ -3,7 +3,7 @@ import { Container, Content, Lab } from "./label.style";
 
 interface LabelProps{
     start: string
-    text: string
+    text?: string
     end?: string
 }
 

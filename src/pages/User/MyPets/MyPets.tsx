@@ -7,6 +7,9 @@ import { Container, PetsList } from "./mypets.style";
 
 // mui components
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
   Button,
   Card,
@@ -20,7 +23,7 @@ import {
 import Label from '../../../components/Label/Label';
 
 // mui icons
-import { Add, Delete, Edit, Check, Cancel } from '@mui/icons-material';
+import { Add, Delete, Edit, Check, Cancel, ExpandMore } from '@mui/icons-material';
 
 // types
 import { Pet } from '../../../types/pet.type';
@@ -117,55 +120,100 @@ export default function MyPets() {
                           <Label start="Cor:" text={pet.color} />
                         </Typography>
 
-                        <Typography component="div">
-                          {pet.adoption.status === "none" && (
-                            <p className="adoptionInfo">Sem adoções ainda :(</p>
-                          )}
+                        <Accordion className="accordion">
+                          <AccordionSummary
+                            className="accordionHeader"
+                            expandIcon={
+                              <ExpandMore className="accordionExpandIcon" />
+                            }
+                          >
+                            <Typography className="accordionTitle">
+                              Descrição
+                            </Typography>
+                          </AccordionSummary>
 
-                          {pet.adoption.status === "going" && (
-                            <p className="adoptionInfo">
-                              <span className="highlight">
-                                {pet.adoption.adopter.firstName}
-                              </span>{" "}
-                              deseja adotá-lo. Entre em contato através do
-                              número{" "}
-                              <span className="highlight">
-                                {pet.adoption.adopter.phone}
-                              </span>
-                            </p>
-                          )}
+                          <AccordionDetails className="accordionDetails">
+                            <Typography>{pet.description}</Typography>
+                          </AccordionDetails>
+                        </Accordion>
 
-                          {pet.adoption.status === "cancelled" && (
-                            <p className="adoptionInfo">
-                              <span className="highlight">
-                                {pet.adoption.adopter.firstName}
-                              </span>{" "}
-                              cancelou a adoção.
-                            </p>
-                          )}
+                        <Accordion
+                        className="accordion">
+                          <AccordionSummary
 
-                          {pet.adoption.status === "returned" && (
-                            <p className="adoptionInfo">
-                              <span className="highlight">
-                                {pet.adoption.adopter.firstName}
-                              </span>{" "}
-                              devolveu o pet.
-                            </p>
-                          )}
+                            className="accordionHeader"
+                            expandIcon={
+                              <ExpandMore className="accordionExpandIcon" />
+                            }
+                          >
+                            <Typography className="accordionTitle">
+                              Mais detalhes
+                            </Typography>
+                          </AccordionSummary>
 
-                          {pet.adoption.status === "returning" && (
-                            <p className="adoptionInfo">
-                              <span className="highlight">
-                                {pet.adoption.adopter.firstName}
-                              </span>{" "}
-                              deseja devolver o pet. Entre em contato através do
-                              número{" "}
-                              <span className="highlight">
-                                {pet.adoption.adopter.phone}
-                              </span>
-                            </p>
-                          )}
-                        </Typography>
+                          <AccordionDetails
+
+                           className="accordionDetails">
+                            <Typography component="div">
+                              {pet.adoption.status === "none" && (
+                                <>Sem adoções ainda :(</>
+                                
+                              )}
+
+                              {pet.adoption.status === "going" && (
+                                <>
+                                  <span className="highlight cap">
+                                    {pet.adoption.adopter.firstName}
+                                  </span>{" "}
+                                  deseja adotá-lo. Entre em contato através do
+                                  número{" "}
+                                  <span className="highlight">
+                                    {pet.adoption.adopter.phone}
+                                  </span>
+                                </>
+                              )}
+
+                              {pet.adoption.status === "cancelled" && (
+                                <>
+                                  <span className="highlight cap">
+                                    {pet.adoption.adopter.firstName}
+                                  </span>{" "}
+                                  cancelou a adoção.
+                                </>
+                              )}
+
+                              {pet.adoption.status === "finished" && (
+                                <>
+                                  Pet foi adotado por <span className="highlight cap">
+                                    {pet.adoption.adopter.firstName}
+                                  </span>.
+                                </>
+                              )}
+
+                              {pet.adoption.status === "returned" && (
+                                <p className="adoptionInfo">
+                                  <span className="highlight cap">
+                                    {pet.adoption.adopter.firstName}
+                                  </span>{" "}
+                                  devolveu o pet.
+                                </p>
+                              )}
+
+                              {pet.adoption.status === "returning" && (
+                                <>
+                                  <span className="highlight cap">
+                                    {pet.adoption.adopter.firstName}
+                                  </span>{" "}
+                                  deseja devolver o pet. Entre em contato
+                                  através do número{" "}
+                                  <span className="highlight">
+                                    {pet.adoption.adopter.phone}
+                                  </span>
+                                </>
+                              )}
+                            </Typography>
+                          </AccordionDetails>
+                        </Accordion>
                       </CardContent>
                     </CardActionArea>
 

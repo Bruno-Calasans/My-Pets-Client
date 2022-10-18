@@ -7,9 +7,8 @@ export const Container = styled.main`
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    max-width: 800px;
+    max-width: 1200px;
     min-width: 320px;
-    /* width: 100%; */
  
     padding: 10px;
 

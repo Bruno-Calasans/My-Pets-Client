@@ -70,13 +70,12 @@ export default function useApi(){
         }
 
       },
-      async editUser(data: UserEdit) {
+      async editUser(data: FormData) {
         try {
           const response = (await api
             .patch("/user/edit", data, {
               headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
               },
             })
             .then((rsp) => rsp.data)) as ApiUserEditSuccessResponse;
@@ -121,8 +120,7 @@ export default function useApi(){
           const response = (await api
             .get("/pet/mypets", {
               headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
               },
             })
             .then((rsp) => rsp.data)) as ApiPetsSuccessResponse;
@@ -142,8 +140,7 @@ export default function useApi(){
           const response = (await api
             .delete(`/pet/delete/${id}`, {
               headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
               },
             })
             .then((rsp) => rsp.data)) as ApiPetSuccessResponse;

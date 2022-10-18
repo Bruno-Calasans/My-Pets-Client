@@ -112,5 +112,33 @@ import { createGlobalStyle } from "styled-components";
         margin-bottom: 5px;
     }
 
+    .accordion {
+        
+        color: black;
+        width: 100%;
+
+        .accordionHeader{
+            padding-left: 0;
+
+        }
+
+        .accordionExpandIcon {
+        }
+
+        .accordionTitle {
+            color: var(--primaryColor);
+            font-weight: bold;
+        }
+
+        .accordionDetails {
+            font-style: italic;
+            font-size: 0.9em;
+        }
+    }
+
+    .cap{
+        text-transform: capitalize;
+    }
+
 `;
 export default GlobalStyle

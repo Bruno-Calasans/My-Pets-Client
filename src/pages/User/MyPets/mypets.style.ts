@@ -6,11 +6,10 @@ export const Container = styled.section`
   justify-content: center;
   /* max-width: 700px; */
   /* min-width: 320px; */
-  /* width: 50%; */
+  /* width: 100%; */
 `;
 
 export const PetsList = styled.div`
-
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -22,47 +21,45 @@ export const PetsList = styled.div`
     .cardArea {
       display: flex;
 
-      .petAvatar{
+      .petAvatar {
         width: 120px;
         height: 100px;
       }
-      
-      .cardContent{
+
+      .cardContent {
+        width: 100%;
         flex-grow: 1;
 
-        .petName{
+        .petName {
           color: var(--primaryColor);
           text-transform: capitalize;
           font-size: 1.5rem;
           font-weight: bold;
         }
 
-        .adoptionInfo{
+        .adoptionInfo {
           font-style: italic;
           padding: 5px;
         }
       }
-
     }
 
-    .cardBtns{
+    .cardBtns {
       width: 300px;
       flex-direction: column;
       justify-content: center;
 
-      .actionBtn{
+      .actionBtn {
         font-size: 0.6rem;
         justify-content: center;
         margin: 0;
         margin-bottom: 5px;
         width: 100%;
-        
       }
     }
   }
 
-  @media(max-width: 600px){
-
+  @media (max-width: 600px) {
     justify-content: center;
     align-items: center;
 
@@ -70,18 +67,17 @@ export const PetsList = styled.div`
       flex-direction: column;
       width: 300px;
 
-      .cardArea{
+      .cardArea {
         flex-direction: column;
 
-        .cardContent{
-
-          .petName{
+        .cardContent {
+          .petName {
             text-align: center;
           }
         }
       }
+    }
   }
-}
 `;
 
 

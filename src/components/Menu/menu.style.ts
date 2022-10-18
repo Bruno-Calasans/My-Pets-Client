@@ -45,6 +45,7 @@ export const Container = styled.nav`
     }
 
     #logoutBtn {
+      justify-content: flex-start;
       width: 100%;
     }
 

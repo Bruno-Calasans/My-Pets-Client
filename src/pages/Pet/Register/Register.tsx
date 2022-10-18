@@ -8,7 +8,6 @@ import type { PetColors, PetFields } from "../../../types/pet.type";
 // mui components
 import {
   FormControl,
-  Avatar,
   IconButton,
   InputLabel,
   MenuItem,
@@ -16,7 +15,8 @@ import {
   TextField,
   SelectChangeEvent,
   ImageList,
-  ImageListItem
+  ImageListItem,
+  TextareaAutosize
 } from "@mui/material";
 
 import { LoadingButton } from "@mui/lab";
@@ -125,8 +125,8 @@ export default function Register(){
       <Container ref={form} onSubmit={(e) => e.preventDefault()}>
 
         <FormControl className="imgsPreview">
-          {preview.length > 0 &&
-          (<ImageList
+          {preview.length > 0 && (
+            <ImageList
               sx={{ width: "100%", height: 200 }}
               cols={2}
               rowHeight={164}
@@ -191,8 +191,27 @@ export default function Register(){
           value={pet.inputs.weight.value}
         />
 
+        <InputLabel>Descrição</InputLabel>
+        <FormControl>
+          <TextareaAutosize
+            className="petDescription"
+            name="description"
+            maxRows={4}
+            maxLength={1000}
+            placeholder="Breve descrição do pet"
+            defaultValue=""
+            style={{
+              minWidth: "100%",
+              maxWidth: "100%",
+              minHeight: "100px",
+              maxHeight: "200px",
+              padding: '5px'
+            }}
+          />
+        </FormControl>
+
         <FormControl variant="standard">
-          <InputLabel id="color-selector">Cor</InputLabel>
+          <InputLabel>Cor</InputLabel>
           <Select
             labelId="color-selector"
             label="Cor"

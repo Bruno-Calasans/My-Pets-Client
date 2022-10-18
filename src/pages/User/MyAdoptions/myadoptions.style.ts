@@ -6,7 +6,7 @@ export const Container = styled.section`
 
     .card {
         
-        width: 700px;
+        width: 100%;
         margin: 5px 0;
         
         .cardArea{

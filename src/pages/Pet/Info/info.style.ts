@@ -30,6 +30,13 @@ export const Container = styled.section`
                 font-weight: bold;
                 color: var(--Color);
             }
+
+            .petDescription{
+                font-style: italic;
+                margin-top: 5px;
+                border-top: 1px solid var(--primaryColor);
+            }
+
         }
 
         .cardActions{

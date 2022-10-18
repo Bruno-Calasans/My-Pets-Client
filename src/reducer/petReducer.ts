@@ -1,8 +1,8 @@
 
+import { defaultInputValue, Input } from "../types/input.type";
 import {
   PetFields,
   PetState,
-  PetInput,
   PetColors,
   PetInputs
 } from "../types/pet.type";
@@ -19,15 +19,16 @@ type PetAction =
   | { type: "START_LOADING" | "STOP_LOADING" | "VALIDATE"}
   | {type: 'SET_IMAGES', payload: String[]} 
   | {type: 'SET_COLOR', payload: PetColors} 
-  | { type: "SET_FIELD"; fieldName: PetFields; payload: PetInput }
+  | { type: "SET_FIELD"; fieldName: PetFields; payload: Input }
   | { type: "SET_FIELDS"; payload: PetInputs };
 
 export const petState: PetState = {
     inputs: {
-        name: {value: '', msg: '', error: false, valid: false},
-        age: {value: '', msg: '', error: false, valid: false},
-        weight: {value: '', msg: '', error: false, valid: false},
+        name: defaultInputValue,
+        age: defaultInputValue,
+        weight: defaultInputValue,
         color: PetColorList[0],
+        description: defaultInputValue,
         images: []
     },
     loading: false,
@@ -73,7 +74,7 @@ export function petReducer(state: PetState, action: PetAction): PetState {
 
             if(!['color', 'images'].includes(fieldName)){
 
-              const props = state.inputs[fieldName as PetFields] as PetInput
+              const props = state.inputs[fieldName as PetFields] as Input
   
               // invalid fields
               if (!props.valid) {
