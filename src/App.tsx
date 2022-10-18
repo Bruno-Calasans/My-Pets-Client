@@ -24,11 +24,12 @@ import PetInfo from "./pages/Pet/Info/Info";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
+import logo from '../assets/logo.png'
 
 function App() {
   return (
     <>
-      <Header logoSrc="src/assets/logo.png" />
+      <Header logoSrc={logo}/>
       <Main>
         <Routes>
           <Route index element={<Pets />} />
