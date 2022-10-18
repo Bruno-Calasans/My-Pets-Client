@@ -1,6 +1,4 @@
 
-document.title = 'mypets'
-
 // react
 import { useState, useEffect } from 'react';
 

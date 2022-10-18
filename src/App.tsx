@@ -24,60 +24,87 @@ import PetInfo from "./pages/Pet/Info/Info";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
-import logo from '../assets/logo.png'
+// import logo from '../assets/logo.png'
+// import favicon from '../assets/favicon.png'
+import Title from "./components/Title/Title";
 
 function App() {
   return (
     <>
-      <Header logoSrc={logo}/>
+      <Header logoSrc='/imgs/logo.png' />
       <Main>
         <Routes>
-          <Route index element={<Pets />} />
+          <Route
+            index
+            element={
+              <Title name="pets">
+                <Pets />
+              </Title>
+            }
+          />
 
-          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/login" element={
+          <Title name="login">
+            <Login />
+          </Title>
+          } />
           <Route path="/auth/register" element={<Register />} />
           <Route
             path="/user/profile"
             element={
+              <Title name="profile">
               <CheckAuth>
                 <UserProfile />
               </CheckAuth>
+              </Title>
             }
           />
           <Route
             path="/user/mypets"
             element={
+              <Title name="mypets">
               <CheckAuth>
                 <MyPets />
               </CheckAuth>
+              </Title>
             }
           />
           <Route
             path="/user/myadoptions"
             element={
+              <Title name="myadoptions">
               <CheckAuth>
                 <MyAdoptions />
               </CheckAuth>
+              </Title>
             }
           />
           <Route path="/pet/info/:id" element={<PetInfo />} />
           <Route
             path="/pet/edit/:id"
             element={
+              <Title name="edit pet">
               <CheckAuth>
                 <PetEdit />
               </CheckAuth>
+              </Title>
             }
           />
           <Route
             path="/pet/register"
             element={
+              <Title name="pet register">
               <CheckAuth>
                 <PetRegister />
               </CheckAuth>
+              </Title>
             }
           />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={
+            <Title name="not found">
+              <PageNotFound />
+            </Title>
+          } />
         </Routes>
       </Main>
       <Footer

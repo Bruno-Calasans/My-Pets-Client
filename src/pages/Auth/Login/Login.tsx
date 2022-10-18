@@ -1,6 +1,4 @@
 
-document.title = "login";
-
 // react
 import { useReducer, useRef } from "react";
 import { useContext } from "react";

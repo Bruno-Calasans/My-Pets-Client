@@ -1,7 +1,4 @@
 
-
-document.title = 'pet edit'
-
 // style
 import { Container } from "./edit.style";
 

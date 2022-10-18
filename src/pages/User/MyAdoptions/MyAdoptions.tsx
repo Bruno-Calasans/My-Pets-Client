@@ -1,7 +1,4 @@
 
-
-document.title = 'my adoptions'
-
 // style
 import { Container } from "./myadoptions.style";
 
