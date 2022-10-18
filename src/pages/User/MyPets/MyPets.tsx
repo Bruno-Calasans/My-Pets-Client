@@ -32,9 +32,25 @@ import { ApiPetsSuccessResponse } from "./../../../types/api.type";
 // custom hooks
 import useApi from './../../../hooks/useApi';
 
+import Filter, {
+  filterPets,
+  SearchType,
+} from "../../../components/Filter/Filter";
+import { Search } from "../../../components/Filter/Filter";
+
+const searchTypes: SearchType[] = [
+  "tudo",
+  "nome",
+  "idade",
+  "peso",
+  "cor",
+  "descrição",
+];
+
 export default function MyPets() {
 
     const [pets, setPets] = useState<Pet[]>([])
+    const [search, setSearch] = useState<Search>({text: '', type: 'tudo'})
     const api = useApi()
 
     const loadPets = async () => {
@@ -71,26 +87,39 @@ export default function MyPets() {
 
     useEffect(() => { loadPets()}, [])
 
+    const filteredPets = search.text
+      ? filterPets(search, pets, "mypets")
+      : pets;
+
     return (
       <>
         <h1 className="pageName">Meus pets</h1>
 
         <Container>
+          <Button
+            className="addBtn"
+            startIcon={<Add />}
+            href="/pet/register"
+            variant="contained"
+          >
+            Novo Pet
+          </Button>
 
-            <Button
-            className='addBtn' 
-            startIcon={<Add/>} href="/pet/register" variant="contained">
-              Novo Pet
-            </Button>
+          <Filter
+            search={search}
+            types={searchTypes}
+            changeHandler={setSearch}
+          />
 
-          {pets.length === 0 ?
-
-            (<div className='noContentMsg'>
-              Você não tem nenhum pet cadastrado
-            </div>) :
-
-          (<PetsList>
-            {pets.map((pet, index) => {
+          {filteredPets.length === 0 ? (
+            <div className="noContentMsg">
+              {search
+                ? `Nenhum pet encontrado para "${search.text}" filtrando por "${search.type}"`
+                : "Nenhum Pet cadastrado"}
+            </div>
+          ) : (
+            <PetsList>
+              {filteredPets.map((pet, index) => {
                 return (
                   <Card key={index} className="card">
                     <CardActionArea className="cardArea">
@@ -137,10 +166,8 @@ export default function MyPets() {
                           </AccordionDetails>
                         </Accordion>
 
-                        <Accordion
-                        className="accordion">
+                        <Accordion className="accordion">
                           <AccordionSummary
-
                             className="accordionHeader"
                             expandIcon={
                               <ExpandMore className="accordionExpandIcon" />
@@ -151,13 +178,10 @@ export default function MyPets() {
                             </Typography>
                           </AccordionSummary>
 
-                          <AccordionDetails
-
-                           className="accordionDetails">
+                          <AccordionDetails className="accordionDetails">
                             <Typography component="div">
                               {pet.adoption.status === "none" && (
                                 <>Sem adoções ainda :(</>
-                                
                               )}
 
                               {pet.adoption.status === "going" && (
@@ -184,9 +208,11 @@ export default function MyPets() {
 
                               {pet.adoption.status === "finished" && (
                                 <>
-                                  Pet foi adotado por <span className="highlight cap">
+                                  Pet foi adotado por{" "}
+                                  <span className="highlight cap">
                                     {pet.adoption.adopter.firstName}
-                                  </span>.
+                                  </span>
+                                  .
                                 </>
                               )}
 
@@ -292,9 +318,9 @@ export default function MyPets() {
                     </CardActions>
                   </Card>
                 );
-            })}
-          </PetsList> )
-          }
+              })}
+            </PetsList>
+          )}
         </Container>
       </>
     );

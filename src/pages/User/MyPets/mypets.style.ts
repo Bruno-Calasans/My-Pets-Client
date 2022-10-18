@@ -4,9 +4,6 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* max-width: 700px; */
-  /* min-width: 320px; */
-  /* width: 100%; */
 `;
 
 export const PetsList = styled.div`

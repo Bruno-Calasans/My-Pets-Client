@@ -17,8 +17,15 @@ export const Container = styled.main`
         text-align: center;
         font-size: 2rem;
         font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin: 10px 0;
+        color: var(--primaryColor);
+    }
+
+    .pageSubTitle {
+        width: 100%;
+        font-size:1rem;
+        font-weight: bold;
+        margin: 10px 0;
         color: var(--primaryColor);
     }
 

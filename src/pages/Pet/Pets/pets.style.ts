@@ -4,7 +4,6 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
 
   a {
     align-self: flex-start;
@@ -19,6 +18,7 @@ export const PetsList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 5px;
+  width: 100%;
 
   margin-top: 5px;
   margin-bottom: 5px;

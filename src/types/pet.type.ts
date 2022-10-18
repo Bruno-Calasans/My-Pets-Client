@@ -2,7 +2,17 @@
 import { UserContact } from "./user.type";
 import { Input } from "./input.type";
 export type PetFields = 'name' | 'age' | 'weight' | 'color' | 'images'
-export type PetColors = 'preto' | 'branco'| 'cinza'| 'amarelo' |'misturado'
+export type PetColors =
+  | "preta"
+  | "branca"
+  | "cinza"
+  | "amarela"
+  | "laranja"
+  | "azul"
+  | "rosa"
+  | "vermelha"
+  | "misturada"
+  | "outra"
 
 type AdoptionStatus =
   | "none"

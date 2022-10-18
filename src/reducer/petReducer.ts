@@ -8,11 +8,16 @@ import {
 } from "../types/pet.type";
 
 export const PetColorList: PetColors[] = [
-  "preto",
-  "branco",
+  "preta",
+  "branca",
   "cinza",
-  "amarelo",
-  "misturado",
+  "amarela",
+  "laranja",
+  "azul",
+  "rosa",
+  "vermelha",
+  "misturada",
+  "outra"
 ];
 
 type PetAction =

@@ -28,7 +28,6 @@ import { Upload,  Save } from "@mui/icons-material";
 import { petReducer, petState, PetColorList } from "../../../reducer/petReducer";
 import { validateName, validateNumber} from "../../../schemas/userValidator";
 import { alphaMask, floatFormat, numberMask } from "../../../helpers/maks";
-import formDataToObj from "../../../helpers/getObjFromFormData";
 
 import useApi from './../../../hooks/useApi';
 
