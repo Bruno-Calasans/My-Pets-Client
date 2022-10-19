@@ -9,7 +9,6 @@ import { useNavigate } from "react-router";
 
 // components
 import {
-  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -51,7 +50,7 @@ export default function Pets(){
 
     useEffect(() => { loadPets() }, []);
 
-    const filteredPets = (search.text) ? filterPets(search, pets, "pets") : pets
+    const filteredPets = (search.text != '') ? filterPets(search, pets, "pets") : pets
 
     return (
       <Container>
@@ -119,7 +118,7 @@ export default function Pets(){
           </>
         ) : (
           <div className="noContentMsg">
-             {search
+             {search.text
                 ? `Nenhum pet encontrado para "${search.text}" filtrando por "${search.type}"`
                 : "Nenhum Pet cadastrado"
               }

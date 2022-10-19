@@ -7,10 +7,9 @@ export const Container = styled.main`
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    max-width: 1200px;
-    min-width: 320px;
- 
-    padding: 10px;
+
+    width: 80%;
+    padding: 10px 0px;
 
     .pageName {
         width: 100%;
@@ -27,6 +26,10 @@ export const Container = styled.main`
         font-weight: bold;
         margin: 10px 0;
         color: var(--primaryColor);
+    }
+
+    @media (min-width: 1100px) {
+        width: 1100px;
     }
 
 `

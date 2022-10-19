@@ -87,9 +87,7 @@ export default function MyPets() {
 
     useEffect(() => { loadPets()}, [])
 
-    const filteredPets = search.text
-      ? filterPets(search, pets, "mypets")
-      : pets;
+    const filteredPets = search.text ? filterPets(search, pets, "mypets") : pets;
 
     return (
       <>
@@ -113,7 +111,7 @@ export default function MyPets() {
 
           {filteredPets.length === 0 ? (
             <div className="noContentMsg">
-              {search
+              {search.text
                 ? `Nenhum pet encontrado para "${search.text}" filtrando por "${search.type}"`
                 : "Nenhum Pet cadastrado"}
             </div>
