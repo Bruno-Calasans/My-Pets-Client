@@ -41,7 +41,7 @@ function App() {
             }
           />
 
-          <Route path="/auth/login" element={
+          <Route path="/login" element={
           <Title name="login">
             <Login />
           </Title>
