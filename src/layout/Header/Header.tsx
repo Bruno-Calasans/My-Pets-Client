@@ -62,7 +62,7 @@ export default function Header({ logoSrc }: HeaderProps) {
             ) : (
               // if the user is not authenticated
               <>
-                <Button href="/auth/login" startIcon={<Login />}>
+                <Button href="/login" startIcon={<Login />}>
                   Login
                 </Button>
 
