@@ -105,6 +105,16 @@ export default function Info(){
               <Typography className="petInfo petColor" component="div">
                 <Label start="Cor:" text={pet.color} />
               </Typography>
+              <Typography className="petOwner cap" component="div">
+                <Label
+                  start="Dono: "
+                  text={
+                    pet.adoption.owner.firstName +
+                    " " +
+                    pet.adoption.owner.lastName
+                  }
+                />
+                </Typography>
 
               <Accordion className='accordion'>
 
