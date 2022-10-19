@@ -1,5 +1,5 @@
 
-import { Button, Link } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   Pets,
   Login,
@@ -62,8 +62,8 @@ export default function Header({ logoSrc }: HeaderProps) {
             ) : (
               // if the user is not authenticated
               <>
-                <Button startIcon={<Login />}>
-                  <Link href="/login">Login</Link>
+                <Button href="/auth/login" startIcon={<Login />}>
+                  Login
                 </Button>
 
                 <Button href="/auth/register" startIcon={<AccountCircle />}>
