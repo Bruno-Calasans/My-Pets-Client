@@ -1,6 +1,4 @@
 
-document.title = 'login'
-
 // style
 import { Container } from "./register.style";
 
