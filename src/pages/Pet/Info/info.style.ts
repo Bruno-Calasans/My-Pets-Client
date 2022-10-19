@@ -9,6 +9,7 @@ export const Container = styled.section`
         .imageList{
             display: grid;
             grid-template-columns: 1fr 1fr;
+            padding: 16px;
         }
 
         .cardContent {

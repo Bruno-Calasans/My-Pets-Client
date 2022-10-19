@@ -115,6 +115,7 @@ import { createGlobalStyle } from "styled-components";
     .accordion {
         
         color: black;
+        margin: 10px 0px;
         width: 100%;
 
         .accordionHeader{
@@ -138,6 +139,13 @@ import { createGlobalStyle } from "styled-components";
 
     .cap{
         text-transform: capitalize;
+    }
+
+    .loadingSpinner{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        color: var(--primaryColor);
     }
 
 `;

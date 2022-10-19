@@ -13,6 +13,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 
@@ -33,15 +34,18 @@ const searchTypes: SearchType[] = ['tudo', 'nome', 'dono']
 export default function Pets(){
 
     const [pets, setPets] = useState<Pet[]>([])
+    const[loading, setLoading] = useState(false)
     const [search, setSearch] = useState<Search>({text: '', type: 'tudo'})
     const api = useApi()
     const navigate = useNavigate()
 
     const loadPets = async () => {
+      setLoading(true)
       const response = await api.getAllPets() as ApiPetsSuccessResponse
       if(response.pets){
         setPets(response.pets)
       }
+      setLoading(false)
     }
 
     const showPetInfo = (id: string) => {
@@ -53,12 +57,19 @@ export default function Pets(){
     const filteredPets = (search.text != '') ? filterPets(search, pets, "pets") : pets
 
     return (
+ 
       <Container>
         <h1 className="pageName">Pets Para Adotar</h1>
 
-        <Filter search={search} types={searchTypes} changeHandler={setSearch} />
-
-        {filteredPets.length > 0 ? (
+        <Filter
+          search={search}
+          types={searchTypes}
+          changeHandler={setSearch}
+        />
+      {loading ? (
+      <CircularProgress className="loadingSpinner"/>) :
+        <>
+          {filteredPets.length > 0 ? (
           <>
             <h3 className="pageSubTitle">
               Clique no card para obter mais detalhes
@@ -97,14 +108,20 @@ export default function Pets(){
                           />
                         </Typography>
 
-                        <Typography className="petCreatedAt" component="div">
+                        <Typography
+                          className="petCreatedAt"
+                          component="div"
+                        >
                           <Label
                             start="Criado em:"
                             text={formatDate(pet.createdAt)}
                           />
                         </Typography>
 
-                        <Typography className="petAvaliable" component="div">
+                        <Typography
+                          className="petAvaliable"
+                          component="div"
+                        >
                           {pet.adoption.status == "finished"
                             ? "Indisponível"
                             : ""}
@@ -118,12 +135,14 @@ export default function Pets(){
           </>
         ) : (
           <div className="noContentMsg">
-             {search.text
-                ? `Nenhum pet encontrado para "${search.text}" filtrando por "${search.type}"`
-                : "Nenhum Pet cadastrado"
-              }
+            {search.text
+              ? `Nenhum pet encontrado para "${search.text}" filtrando por "${search.type}"`
+              : "Nenhum Pet cadastrado"}
           </div>
         )}
+        </>
+      }
       </Container>
-    );
+  )
+ 
 }

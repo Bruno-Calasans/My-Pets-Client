@@ -24,8 +24,6 @@ import PetInfo from "./pages/Pet/Info/Info";
 import CheckAuth from "./components/CheckAuth/CheckAuth";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
-// import logo from '../assets/logo.png'
-// import favicon from '../assets/favicon.png'
 import Title from "./components/Title/Title";
 
 function App() {
@@ -37,7 +35,7 @@ function App() {
           <Route
             index
             element={
-              <Title name="pets">
+              <Title name="home">
                 <Pets />
               </Title>
             }
@@ -52,7 +50,7 @@ function App() {
           <Route
             path="/user/profile"
             element={
-              <Title name="profile">
+              <Title name="perfil">
               <CheckAuth>
                 <UserProfile />
               </CheckAuth>
@@ -62,7 +60,7 @@ function App() {
           <Route
             path="/user/mypets"
             element={
-              <Title name="mypets">
+              <Title name="meus pets">
               <CheckAuth>
                 <MyPets />
               </CheckAuth>
@@ -72,7 +70,7 @@ function App() {
           <Route
             path="/user/myadoptions"
             element={
-              <Title name="myadoptions">
+              <Title name="adoções">
               <CheckAuth>
                 <MyAdoptions />
               </CheckAuth>
@@ -83,7 +81,7 @@ function App() {
           <Route
             path="/pet/edit/:id"
             element={
-              <Title name="edit pet">
+              <Title name="edição de pet">
               <CheckAuth>
                 <PetEdit />
               </CheckAuth>
@@ -93,7 +91,7 @@ function App() {
           <Route
             path="/pet/register"
             element={
-              <Title name="pet register">
+              <Title name="registro de pet">
               <CheckAuth>
                 <PetRegister />
               </CheckAuth>

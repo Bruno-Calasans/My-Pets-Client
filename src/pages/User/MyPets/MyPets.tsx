@@ -16,6 +16,7 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 
@@ -50,14 +51,17 @@ const searchTypes: SearchType[] = [
 export default function MyPets() {
 
     const [pets, setPets] = useState<Pet[]>([])
+    const [loading, setLoading] = useState(false)
     const [search, setSearch] = useState<Search>({text: '', type: 'tudo'})
     const api = useApi()
 
     const loadPets = async () => {
+      setLoading(true)
       const response = (await api.getMyPets()) as ApiPetsSuccessResponse;
       if (response.pets) {
         setPets(response.pets);
       }
+      setLoading(false)
     };
 
     const removePet = async (petId: string) => {
@@ -93,7 +97,11 @@ export default function MyPets() {
       <>
         <h1 className="pageName">Meus pets</h1>
 
-        <Container>
+        {loading ? (
+        <CircularProgress className="loadingSpinner"/>) :
+
+        <>
+           <Container>
           <Button
             className="addBtn"
             startIcon={<Add />}
@@ -320,6 +328,9 @@ export default function MyPets() {
             </PetsList>
           )}
         </Container>
+        
+        </>
+      }
       </>
     );
 }

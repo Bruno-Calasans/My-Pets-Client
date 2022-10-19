@@ -10,11 +10,15 @@ export const Container = styled.section`
 export const PetsList = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 
   .card {
     display: flex;
+    flex-direction: column;
     margin: 20px 0px;
+    padding: 10px;
 
     .cardArea {
       display: flex;
@@ -43,16 +47,17 @@ export const PetsList = styled.div`
     }
 
     .cardBtns {
-      width: 300px;
-      flex-direction: column;
+      width: 100%;
+      /* flex-direction: column; */
       justify-content: center;
 
       .actionBtn {
         font-size: 0.6rem;
         justify-content: center;
         margin: 0;
-        margin-bottom: 5px;
-        width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 80%;
       }
     }
   }
